@@ -36,7 +36,6 @@ java.toolchain.languageVersion.set(JavaLanguageVersion.of(8))
 version = "0.2.19"
 group = "thedarkcolour.futuremc"
 
-
 minecraft {
     mcVersion.set("1.12.2")
     mcpMappingChannel.set("stable")
@@ -50,7 +49,6 @@ minecraft {
     )
 }
 
-
 val targetFile = "src/main/resources/META-INF/futuremc_at.cfg"
 
 tasks.deobfuscateMergedJarToSrg.get()
@@ -61,9 +59,7 @@ tasks.srgifyBinpatchedJar.get()
     .accessTransformerFiles
     .from(targetFile)
 
-
 repositories {
-
     maven {
         name = "CraftTweaker/Quark/AutoRegLib"
         url = uri("https://maven.blamejared.com")
@@ -113,13 +109,10 @@ repositories {
     }
 }
 
-
 dependencies {
-
     implementation("org.jetbrains.kotlin:kotlin-stdlib:2.4.0")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.4.0")
     implementation("org.jetbrains.kotlin:kotlin-reflect:2.4.0")
-
 
     curseMaven("enchantment_descriptions", 250419, 2689502)
     curseMaven("enchantment_descriptions_sources", 250419, 2689503)
@@ -145,7 +138,6 @@ dependencies {
         8248535
     )
 
-
     curseMaven("dynamic_trees",252818,3260881)
     curseMaven("pams_harvestcraft",221857,2904825)
     curseMaven("plants",257229,2697165)
@@ -162,7 +154,6 @@ dependencies {
         runtime = true
     )
 
-
     compileOnly(
         rfg.deobf(
             "vazkii.quark:Quark:r1.6-180.7"
@@ -175,20 +166,17 @@ dependencies {
         )
     )
 
-
     compileOnly(
         rfg.deobf(
             "slimeknights.mantle:Mantle:1.12-1.3.3.49"
         )
     )
 
-
     compileOnly(
         rfg.deobf(
             "slimeknights:TConstruct:1.12.2-2.13.0.184"
         )
     )
-
 
     compileOnly(
         rfg.deobf(
@@ -214,20 +202,17 @@ dependencies {
         )
     )
 
-
     compileOnly(
         rfg.deobf(
             "cofh:RedstoneFlux:1.12-2.1.0.7:universal"
         )
     )
 
-
     compileOnly(
         rfg.deobf(
             "codechicken:CodeChickenLib:1.12.2-3.2.3.358:universal"
         )
     )
-
 
     curseMaven(
         "oe",
@@ -237,15 +222,12 @@ dependencies {
     )
 }
 
-
-
 fun DependencyHandlerScope.curseMaven(
     modName: String,
     projectId: Int,
     fileId: Int,
     runtime: Boolean = false
 ) {
-
     val dep =
         rfg.deobf(
             "curse.maven:$modName-$projectId:$fileId"
@@ -258,13 +240,8 @@ fun DependencyHandlerScope.curseMaven(
     }
 }
 
-
-
 tasks {
-
-
     processResources {
-
         inputs.property(
             "version",
             project.version
@@ -275,14 +252,12 @@ tasks {
             project.minecraft.mcVersion
         )
 
-
         filesMatching(
             listOf(
                 "mcmod.info",
                 "pack.mcmeta"
             )
         ) {
-
             expand(
                 mapOf(
                     "version" to project.version,
@@ -292,46 +267,35 @@ tasks {
         }
     }
 
-
     withType<KotlinCompile>().configureEach {
-
         freeCompilerArgs.addAll(
-          "-Xjvm-default=all-compatibility",
-          "-Xopt-in=kotlin.RequiresOptIn"
+            "-Xjvm-default=all-compatibility",
+            "-Xopt-in=kotlin.RequiresOptIn"
         )
 
+        jvmTarget.set(
+            JvmTarget.JVM_1_8
+        )
 
-            jvmTarget.set(
-                JvmTarget.JVM_1_8
-            )
+        languageVersion.set(
+            KotlinVersion.KOTLIN_2_4
+        )
 
-
-            languageVersion.set(
-                KotlinVersion.KOTLIN_2_4
-            )
-
-            apiVersion.set(
-                KotlinVersion.KOTLIN_2_4
-            )
-        }
+        apiVersion.set(
+            KotlinVersion.KOTLIN_2_4
+        )
     }
-
-
 
     named("compileInjectedTagsKotlin") {
         dependsOn("injectTags")
     }
 
-
     named("compileMcLauncherKotlin") {
         dependsOn("createMcLauncherFiles")
     }
 
-
     jar {
-
         manifest {
-
             attributes["FMLAT"] =
                 "futuremc_at.cfg"
 
@@ -344,10 +308,7 @@ tasks {
     }
 }
 
-
-
 tasks.named("compilePatchedMcKotlin") {
-
     dependsOn(
         "decompressDecompiledSources"
     )
