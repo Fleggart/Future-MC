@@ -155,6 +155,11 @@ tasks {
         }
     }
 
+    // 关键修复：为 compileInjectedTagsKotlin 添加对 injectTags 的显式依赖
+    named("compileInjectedTagsKotlin") {
+        dependsOn("injectTags")
+    }
+
     jar {
         manifest {
             attributes["FMLAT"] = "futuremc_at.cfg"
