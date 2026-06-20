@@ -32,9 +32,7 @@ java.toolchain.languageVersion.set(JavaLanguageVersion.of(8))
 version = "0.2.19"
 group = "thedarkcolour.futuremc"
 
-
 minecraft {
-
     mcVersion.set("1.12.2")
     mcpMappingChannel.set("stable")
     mcpMappingVersion.set("39")
@@ -47,96 +45,12 @@ minecraft {
     )
 }
 
-
 val targetFile = "src/main/resources/META-INF/futuremc_at.cfg"
 
-tasks.deobfuscateMergedJarToSrg.get()
-    .accessTransformerFiles
-    .from(targetFile)
-
-tasks.srgifyBinpatchedJar.get()
-    .accessTransformerFiles
-    .from(targetFile)
-
-
-
-/*
-    修复 RFG 合并依赖 AT
-    Forge 1.12.2 AT:
-        net/minecraft/xxx
-
-    NeoForge JST:
-        net.minecraft.xxx
-*/
-
-
-tasks.register("fixDependencyAT") {
-
-    doLast {
-
-        val file = file("build/rfg/dependency_at.cfg")
-
-
-        if (!file.exists()) {
-
-            println(
-                "dependency_at.cfg not found"
-            )
-
-            return@doLast
-        }
-
-
-        println(
-            "Fixing dependency_at.cfg"
-        )
-
-
-        val fixed = file
-            .readLines()
-            .map { line ->
-
-
-                line.replace(
-                    Regex(
-                        "net/minecraft/([A-Za-z0-9_/$]+)"
-                    )
-                ) {
-
-                    "net.minecraft." +
-                    it.groupValues[1]
-                        .replace("/", ".")
-                }
-
-            }
-
-
-        file.writeText(
-            fixed.joinToString("\n")
-        )
-
-
-        println(
-            "dependency_at.cfg fixed"
-        )
-    }
-}
-
-
-/*
-    必须在 JST 前执行
-*/
-tasks.named("applyJST") {
-
-    dependsOn(
-        "fixDependencyAT"
-    )
-}
-
-
+tasks.deobfuscateMergedJarToSrg.get().accessTransformerFiles.from(targetFile)
+tasks.srgifyBinpatchedJar.get().accessTransformerFiles.from(targetFile)
 
 repositories {
-
     maven {
         name = "CraftTweaker/Quark/AutoRegLib"
         url = uri("https://maven.blamejared.com")
@@ -186,130 +100,64 @@ repositories {
     }
 }
 
-
-
 dependencies {
-
-
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.3.50")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.50")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.50")
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.3.50")
 
+    curseMaven("enchantment_descriptions", 250419, 2689502)
+    curseMaven("enchantment_descriptions_sources", 250419, 2689503)
+    curseMaven("fluidlogged_api", 485654, 3698755)
+    curseMaven("biomes_o_plenty", 220318, 2842510)
 
-    curseMaven("enchantment_descriptions",250419,2689502)
-    curseMaven("enchantment_descriptions_sources",250419,2689503)
+    implementation("CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.19.548")
 
-    curseMaven("fluidlogged_api",485654,3698755)
+    curseMaven("had-enough-items", 557549, 4810661, runtime = true)
 
-    curseMaven("biomes_o_plenty",220318,2842510)
+    api("net.shadowfacts:Forgelin:1.8.4")
 
-
-    implementation(
-        "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.19.548"
-    )
-
-
-    curseMaven(
-        "had-enough-items",
-        557549,
-        4810661,
-        runtime = true
-    )
-
-
-    api(
-        "net.shadowfacts:Forgelin:1.8.4"
-    )
+    curseMaven("actually_additions", 228404, 2844115)
+    curseMaven("better_with_mods", 246760, 2965308)
+    curseMaven("better_with_lib", 294335, 2624990)
+    curseMaven("dynamic_trees", 252818, 3260881)
+    curseMaven("pams_harvestcraft", 221857, 2904825)
+    curseMaven("plants", 257229, 2697165)
+    curseMaven("otg", 265894, 3151431)
+    compileOnly(rfg.deobf("vazkii.quark:Quark:r1.6-180.7"))
+    compileOnly(rfg.deobf("slimeknights.mantle:Mantle:1.12-1.3.3.49"))
+    compileOnly(rfg.deobf("slimeknights:TConstruct:1.12.2-2.13.0.184"))
 
 
-    curseMaven("actually_additions",228404,2844115)
-    curseMaven("better_with_mods",246760,2965308)
-    curseMaven("better_with_lib",294335,2624990)
-    curseMaven("dynamic_trees",252818,3260881)
-    curseMaven("pams_harvestcraft",221857,2904825)
-    curseMaven("plants",257229,2697165)
-
-    curseMaven("otg",265894,3151431)
 
 
-    compileOnly(
-        rfg.deobf(
-            "vazkii.quark:Quark:r1.6-180.7"
-        )
-    )
+    
 
-
-    compileOnly(
-        rfg.deobf(
-            "slimeknights.mantle:Mantle:1.12-1.3.3.49"
-        )
-    )
-
-
-    compileOnly(
-        rfg.deobf(
-            "slimeknights:TConstruct:1.12.2-2.13.0.184"
-        )
-    )
-
-
-    curseMaven(
-        "oe",
-        840576,
-        4670168,
-        runtime=true
-    )
-
+    curseMaven("oe", 840576, 4670168, runtime = true)
 }
-
-
 
 fun DependencyHandlerScope.curseMaven(
-    modName:String,
-    projectId:Int,
-    fileId:Int,
-    runtime:Boolean=false
-){
+    modName: String,
+    projectId: Int,
+    fileId: Int,
+    runtime: Boolean = false
+) {
+    val dep = rfg.deobf("curse.maven:$modName-$projectId:$fileId")
 
-    val dep =
-        rfg.deobf(
-            "curse.maven:$modName-$projectId:$fileId"
-        )
-
-
-    if(runtime)
+    if (runtime) {
         implementation(dep)
-    else
+    } else {
         compileOnly(dep)
+    }
 }
-
-
-
 
 tasks {
 
-
     processResources {
+        inputs.property("version", project.version)
+        inputs.property("mcversion", project.minecraft.mcVersion)
 
-        inputs.property(
-            "version",
-            project.version
-        )
-
-        inputs.property(
-            "mcversion",
-            project.minecraft.mcVersion
-        )
-
-
-        filesMatching(
-            listOf(
-                "mcmod.info",
-                "pack.mcmeta"
-            )
-        ){
-
+        filesMatching(listOf("mcmod.info", "pack.mcmeta")) {
             expand(
                 mapOf(
                     "version" to project.version,
@@ -317,59 +165,39 @@ tasks {
                 )
             )
         }
-
     }
-
 
     compileKotlin {
-
         kotlinOptions {
+            freeCompilerArgs = listOf(
+                "-Xinline-classes",
+                "-Xjvm-default=all"
+            )
 
-            jvmTarget="1.8"
-
-            languageVersion="1.4"
-
-            apiVersion="1.4"
-
+            jvmTarget = "1.8"
+            languageVersion = "1.4"
+            apiVersion = "1.4"
         }
-
     }
-
 
     named("compileInjectedTagsKotlin") {
         dependsOn("injectTags")
     }
 
-
     named("compileMcLauncherKotlin") {
         dependsOn("createMcLauncherFiles")
     }
 
-
-
     jar {
-
         manifest {
-
-            attributes["FMLAT"]="futuremc_at.cfg"
-
+            attributes["FMLAT"] = "futuremc_at.cfg"
             attributes["FMLCorePlugin"] =
                 "thedarkcolour.futuremc.asm.CoreLoader"
-
-            attributes["FMLCorePluginContainsFMLMod"]="true"
-
+            attributes["FMLCorePluginContainsFMLMod"] = "true"
         }
-
     }
-
 }
 
-
-
 tasks.named("compilePatchedMcKotlin") {
-
-    dependsOn(
-        "decompressDecompiledSources"
-    )
-
+    dependsOn("decompressDecompiledSources")
 }
