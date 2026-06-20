@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
+import org.jetbrains.kotlin.gradle.dsl.JvmDefaultMode
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
@@ -270,12 +271,12 @@ tasks {
     withType<KotlinCompile>().configureEach {
         compilerOptions {
             freeCompilerArgs.addAll(
-                "-jvm-default=all-compatibility",
                 "-Xopt-in=kotlin.RequiresOptIn"
             )
             jvmTarget.set(JvmTarget.JVM_1_8)
             languageVersion.set(KotlinVersion.KOTLIN_2_4)
             apiVersion.set(KotlinVersion.KOTLIN_2_4)
+            jvmDefault.set(JvmDefaultMode.ENABLE)
         }
     }
 
