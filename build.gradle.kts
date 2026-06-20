@@ -141,6 +141,10 @@ tasks {
         inputs.property("version", project.version)
         inputs.property("mcversion", project.minecraft.mcVersion)
 
+        named("compileInjectedTagsKotlin") {
+            dependsOn("injectTags")
+        }
+
         filesMatching(listOf("mcmod.info", "pack.mcmeta")) {
             expand(mapOf("version" to project.version, "mcversion" to project.minecraft.mcVersion))
         }
