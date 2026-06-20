@@ -23,7 +23,7 @@ buildscript {
 plugins {
     java
     idea
-    kotlin("jvm") version "1.9.24"
+    kotlin("jvm") version "2.4.0"
     id("com.gtnewhorizons.retrofuturagradle") version "2.0.2"
 }
 
@@ -113,7 +113,7 @@ dependencies {
     curseMaven("biomes_o_plenty", 220318, 2842510)
     implementation("CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.19.548")
     curseMaven("had-enough-items", 557549, 4810661, runtime = true)
-    curseMaven("forgelin-continuous", 456403, 5361696)
+    curseMaven("forgelin-continuous", 456403, 8248535)
 
     // Optional mod compat
     curseMaven("dynamic_trees", 252818, 3260881)
