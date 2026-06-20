@@ -136,13 +136,9 @@ dependencies {
     compileOnly(rfg.deobf("slimeknights.mantle:Mantle:1.12-1.3.3.49"))
     compileOnly(rfg.deobf("slimeknights:TConstruct:1.12.2-2.13.0.184"))
 
-    compileOnly(rfg.deobf("cofh:CoFHCore:1.12.2-4.6.3.27:universal"))
-    compileOnly(rfg.deobf("cofh:CoFHWorld:1.12.2-1.3.1.7:universal"))
-    compileOnly(rfg.deobf("cofh:ThermalFoundation:1.12.2-2.6.3.27:universal"))
-    compileOnly(rfg.deobf("cofh:ThermalExpansion:1.12.2-5.5.4.43:universal"))
-    compileOnly(rfg.deobf("cofh:RedstoneFlux:1.12-2.1.0.7:universal"))
 
-    compileOnly(rfg.deobf("codechicken:CodeChickenLib:1.12.2-3.2.3.358:universal"))
+
+    
 
     curseMaven("oe", 840576, 4670168, runtime = true)
 }
