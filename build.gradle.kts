@@ -131,7 +131,7 @@ dependencies {
 
     curseMaven("carryon", 274259, 4507139, runtime = true)
 
-    compileOnly(rfg.deobf("vazkii.quark:Quark:r1.6-180.7"))
+    \\ompileOnly(rfg.deobf("vazkii.quark:Quark:r1.6-180.7"))
     compileOnly(rfg.deobf("vazkii.autoreglib:AutoRegLib:1.3-32.+"))
     compileOnly(rfg.deobf("slimeknights.mantle:Mantle:1.12-1.3.3.49"))
     compileOnly(rfg.deobf("slimeknights:TConstruct:1.12.2-2.13.0.184"))
