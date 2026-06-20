@@ -111,6 +111,8 @@ dependencies {
     curseMaven("better_with_mods", 246760, 2965308)
     curseMaven("better_with_lib", 294335, 2624990)
     curseMaven("obfuscate", 289380, 2916310)
+    curseMaven("theoneprobe", 245211, 2667280) 
+
     curseMaven("carryon", 274259, 4507139, runtime = true)
     compileOnly(rfg.deobf("vazkii.quark:Quark:r1.6-180.7"))
     compileOnly(rfg.deobf("vazkii.autoreglib:AutoRegLib:1.3-32.+"))
@@ -122,7 +124,6 @@ dependencies {
     compileOnly(rfg.deobf("cofh:ThermalExpansion:1.12.2-5.5.4.43:universal"))
     compileOnly(rfg.deobf("cofh:RedstoneFlux:1.12-2.1.0.7:universal"))
     compileOnly(rfg.deobf("codechicken:CodeChickenLib:1.12.2-3.2.3.358:universal"))
-    compileOnly(rfg.deobf("mcjty.theoneprobe:TheOneProbe-1.12:1.12-1.4.28-17"))
     curseMaven("oe", 840576, 4670168, runtime = true)
 }
 
