@@ -1,8 +1,27 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        gradlePluginPortal()
+        maven {
+            name = "Forge"
+            url = uri("https://maven.minecraftforge.net/")
+        }
+        maven {
+            name = "GTNH Maven"
+            url = uri("https://nexus.gtnewhorizons.com/repository/public/")
+            isAllowInsecureProtocol = true
+        }
+    }
+    dependencies {
+        classpath("com.gtnewhorizons.retrofuturagradle:com.gtnewhorizons.retrofuturagradle.gradle.plugin:2.0.2")
+    }
+}
+
 plugins {
     java
     idea
-    kotlin("jvm") version "1.9.0" // To fix broken Gradle + syntax
-    id("com.gtnewhorizons.retrofuturagradle") version "1.3.16"
+    kotlin("jvm") version "1.9.0"
+    id("com.gtnewhorizons.retrofuturagradle") version "2.0.2"
 }
 
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(8))
@@ -56,10 +75,6 @@ repositories {
             includeGroup("codechicken")
         }
     }
-    //maven {
-    //    name = "Actually Additions"
-    //    url = uri("https://maven.ellpeck.de/de/ellpeck/actuallyadditions/")
-    //}
     maven {
         name = "CurseMaven"
         url = uri("https://www.cursemaven.com")
@@ -67,18 +82,6 @@ repositories {
             includeGroup("curse.maven")
         }
     }
-    //maven {
-    //    name = "IC2"
-    //    url = uri("https://maven.ic2.player.to/")
-    //    content {
-    //        includeGroup("")
-    //    }
-    //}
-    //maven {   // Worldedit API
-    //    url = uri("https://maven.sk89q.com/repo/")
-    //    content { includeGroup("") }
-    //}
-    //maven { url = uri("https://jitpack.io") }
 }
 
 dependencies {
@@ -137,9 +140,7 @@ tasks {
         inputs.property("version", project.version)
         inputs.property("mcversion", project.minecraft.mcVersion)
 
-        // Replace various properties in mcmod.info and pack.mcmeta if applicable
         filesMatching(listOf("mcmod.info", "pack.mcmeta")) {
-            // Replace version and mcversion
             expand(mapOf("version" to project.version, "mcversion" to project.minecraft.mcVersion))
         }
     }
