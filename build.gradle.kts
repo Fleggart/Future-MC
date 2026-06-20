@@ -298,7 +298,7 @@ tasks {
         compilerOptions {
 
             freeCompilerArgs.addAll(
-                "-Xjvm-default=enable",
+                "Xjvm-default=all-compatibility",
                 "-Xopt-in=kotlin.RequiresOptIn"
             )
 
