@@ -268,14 +268,14 @@ tasks {
     }
 
     withType<KotlinCompile>().configureEach {
-        kotlinOptions {
-            freeCompilerArgs = listOf(
+        compilerOptions {
+            freeCompilerArgs.addAll(
                 "-Xjvm-default=all-compatibility",
                 "-Xopt-in=kotlin.RequiresOptIn"
             )
-            jvmTarget = "1.8"
-            languageVersion = "2.4"
-            apiVersion = "2.4"
+            jvmTarget.set(JvmTarget.JVM_1_8)
+            languageVersion.set(KotlinVersion.KOTLIN_2_4)
+            apiVersion.set(KotlinVersion.KOTLIN_2_4)
         }
     }
 
