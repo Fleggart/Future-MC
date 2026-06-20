@@ -296,9 +296,9 @@ tasks {
     withType<KotlinCompile>().configureEach {
 
         freeCompilerArgs.addAll(
-    "-Xjvm-default=all-compatibility",
-    "-Xopt-in=kotlin.RequiresOptIn"
-)
+          "-Xjvm-default=all-compatibility",
+          "-Xopt-in=kotlin.RequiresOptIn"
+        )
 
 
             jvmTarget.set(
