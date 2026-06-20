@@ -102,6 +102,8 @@ repositories {
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:2.4.0")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.4.0")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:2.4.0")
 
     // Stuff I care about
     curseMaven("enchantment_descriptions", 250419, 2689502)
@@ -152,7 +154,6 @@ fun DependencyHandlerScope.curseMaven(
 }
 
 tasks {
-
     processResources {
         inputs.property("version", project.version)
         inputs.property("mcversion", project.minecraft.mcVersion)
@@ -167,15 +168,18 @@ tasks {
         }
     }
 
-    compilerOptions {
-    freeCompilerArgs.addAll(
-        "-Xjvm-default=enable",
-        "-Xopt-in=kotlin.RequiresOptIn"
-    )
-    jvmTarget.set(JvmTarget.JVM_1_8)  // 或者 JvmTarget.fromTarget("1.8")
-    languageVersion.set(KotlinVersion.KOTLIN_1_4)
-    apiVersion.set(KotlinVersion.KOTLIN_1_4)
-}
+    // Kotlin 编译配置
+    withType<KotlinCompile>().configureEach {
+        compilerOptions {
+            freeCompilerArgs.addAll(
+                "-Xjvm-default=enable",
+                "-Xopt-in=kotlin.RequiresOptIn"
+            )
+            jvmTarget.set(JvmTarget.JVM_1_8)
+            languageVersion.set(KotlinVersion.KOTLIN_1_4)
+            apiVersion.set(KotlinVersion.KOTLIN_1_4)
+        }
+    }
 
     named("compileInjectedTagsKotlin") {
         dependsOn("injectTags")
