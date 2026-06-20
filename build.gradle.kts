@@ -270,7 +270,7 @@ tasks {
     withType<KotlinCompile>().configureEach {
         compilerOptions {
             freeCompilerArgs.addAll(
-                "-Xjvm-default=all-compatibility",
+                "-jvm-default=all-compatibility",
                 "-Xopt-in=kotlin.RequiresOptIn"
             )
             jvmTarget.set(JvmTarget.JVM_1_8)
