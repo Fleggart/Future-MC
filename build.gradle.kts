@@ -170,18 +170,15 @@ tasks {
         }
     }
 
-    compileKotlin {
-        kotlinOptions {
-            freeCompilerArgs = listOf(
-                "-Xinline-classes",
-                "-Xjvm-default=all"
-            )
-
-            jvmTarget = "1.8"
-            languageVersion = "1.4"
-            apiVersion = "1.4"
-        }
-    }
+    compilerOptions {
+    freeCompilerArgs.addAll(
+        "-Xjvm-default=enable",
+        "-Xopt-in=kotlin.RequiresOptIn"
+    )
+    jvmTarget.set(JvmTarget.JVM_1_8)  // 或者 JvmTarget.fromTarget("1.8")
+    languageVersion.set(KotlinVersion.KOTLIN_1_4)
+    apiVersion.set(KotlinVersion.KOTLIN_1_4)
+}
 
     named("compileInjectedTagsKotlin") {
         dependsOn("injectTags")
