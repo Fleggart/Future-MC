@@ -155,9 +155,13 @@ tasks {
         }
     }
 
-    // 关键修复：为 compileInjectedTagsKotlin 添加对 injectTags 的显式依赖
+    // 修复 RFG 任务依赖问题
     named("compileInjectedTagsKotlin") {
         dependsOn("injectTags")
+    }
+
+    named("compileMcLauncherKotlin") {
+        dependsOn("createMcLauncherFiles")
     }
 
     jar {
