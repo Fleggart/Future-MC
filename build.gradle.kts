@@ -117,17 +117,7 @@ dependencies {
 
     api("net.shadowfacts:Forgelin:1.8.4")
 
-    curseMaven("otg", 265894, 3151431)
-
-    curseMaven("dynamic_trees", 252818, 3260881)
-    curseMaven("pams_harvestcraft", 221857, 2904825)
-    curseMaven("plants", 257229, 2697165)
-    curseMaven("placebo", 283644, 2694382)
-    curseMaven("actually_additions", 228404, 2844115)
-    curseMaven("better_with_mods", 246760, 2965308)
-    curseMaven("better_with_lib", 294335, 2624990)
-    curseMaven("obfuscate", 289380, 2916310)
-    curseMaven("theoneprobe", 245211, 2667280)
+    
 
 
 
