@@ -34,7 +34,7 @@ minecraft {
     mcpMappingChannel.set("stable")
     mcpMappingVersion.set("39")
     username.set("Dev")
-    useDependencyAccessTransformers.set(true)
+    useDependencyAccessTransformers.set(false)
     extraRunJvmArguments.add("-Dfml.coreMods.load=thedarkcolour.futuremc.asm.CoreLoader")
 }
 
