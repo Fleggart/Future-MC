@@ -101,10 +101,7 @@ repositories {
 }
 
 dependencies {
-    implementation (group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version = "1.3.50")
-    implementation (group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk7", version = "1.3.50")
-    implementation (group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version = "1.3.50")
-    implementation (group = "org.jetbrains.kotlin", name = "kotlin-reflect", version = "1.3.50")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.4.0")
 
     // Stuff I care about
     curseMaven("enchantment_descriptions", 250419, 2689502)
