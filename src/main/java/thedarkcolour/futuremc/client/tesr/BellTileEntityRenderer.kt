@@ -32,6 +32,7 @@ class BellTileEntityRenderer : TileEntitySpecialRenderer<BellTileEntity>() {
                 EnumFacing.WEST -> f2 = +f3
                 EnumFacing.DOWN -> {}
                 EnumFacing.UP -> {}
+                null -> {}
             }
 
             GlStateManager.rotate(f3, f1, 0.0f, f2)
