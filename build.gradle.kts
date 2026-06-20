@@ -113,7 +113,7 @@ dependencies {
     curseMaven("biomes_o_plenty", 220318, 2842510)
     implementation("CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.19.548")
     curseMaven("had-enough-items", 557549, 4810661, runtime = true)
-    api("net.shadowfacts:Forgelin:1.8.4")
+    implementation fg.deobf("curse.maven:forgelin-continuous-456403:5361696")
 
     // Optional mod compat
     curseMaven("dynamic_trees", 252818, 3260881)
