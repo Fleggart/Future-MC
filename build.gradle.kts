@@ -20,7 +20,7 @@ buildscript {
 plugins {
     java
     idea
-    kotlin("jvm") version "1.9.0"
+    kotlin("jvm") version "1.9.24"
     id("com.gtnewhorizons.retrofuturagradle") version "2.0.2"
 }
 
