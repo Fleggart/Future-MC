@@ -123,9 +123,7 @@ dependencies {
     curseMaven("dynamic_trees", 252818, 3260881)
     curseMaven("pams_harvestcraft", 221857, 2904825)
     curseMaven("plants", 257229, 2697165)
-    curseMaven("otg", 265894, 3151431) {
-    transitive = false
-}
+    curseMaven("otg", 265894, 7004304)
     compileOnly(rfg.deobf("vazkii.quark:Quark:r1.6-180.7"))
     compileOnly(rfg.deobf("slimeknights.mantle:Mantle:1.12-1.3.3.49"))
     compileOnly(rfg.deobf("slimeknights:TConstruct:1.12.2-2.13.0.184"))
