@@ -14,6 +14,7 @@ import java.util.*
  * @author TheDarkColour
  */
 interface FWorldGen : IWorldGenerator {
+
     /**
      * Named arguments with proper nullability.
      */
@@ -31,12 +32,27 @@ interface FWorldGen : IWorldGenerator {
      *
      * @param placeFunction the feature placer
      */
-    @JvmDefault
-    fun generateNormalOre(worldIn: World, rand: Random, chunkX: Int, chunkZ: Int, veinCount: Int, minHeight: Int, maxHeight: Int, placeFunction: (World, Random, BlockPos) -> Unit) {
-        if (minHeight > 255 || maxHeight > 255) throw IllegalArgumentException("Height range must be in 0..255")
+    fun generateNormalOre(
+        worldIn: World,
+        rand: Random,
+        chunkX: Int,
+        chunkZ: Int,
+        veinCount: Int,
+        minHeight: Int,
+        maxHeight: Int,
+        placeFunction: (World, Random, BlockPos) -> Unit
+    ) {
+        if (minHeight > 255 || maxHeight > 255) {
+            throw IllegalArgumentException("Height range must be in 0..255")
+        }
 
         for (i in 0 until veinCount) {
-            val position = BlockPos((chunkX * 16) + rand.nextInt(16), rand.nextInt(maxHeight - minHeight) + minHeight, (chunkZ * 16) + rand.nextInt(16))
+            val position = BlockPos(
+                (chunkX * 16) + rand.nextInt(16),
+                rand.nextInt(maxHeight - minHeight) + minHeight,
+                (chunkZ * 16) + rand.nextInt(16)
+            )
+
             placeFunction(worldIn, rand, position)
         }
     }
@@ -44,15 +60,29 @@ interface FWorldGen : IWorldGenerator {
     /**
      * Places this feature like Lapis Lazuli
      */
-    @JvmDefault
-    fun generateLapisStyleOre(worldIn: World, rand: Random, chunkX: Int, chunkZ: Int, veinCount: Int, base: Int, spread: Int, placeFunction: (World, Random, BlockPos) -> Unit) {
+    fun generateLapisStyleOre(
+        worldIn: World,
+        rand: Random,
+        chunkX: Int,
+        chunkZ: Int,
+        veinCount: Int,
+        base: Int,
+        spread: Int,
+        placeFunction: (World, Random, BlockPos) -> Unit
+    ) {
         for (i in 0 until veinCount) {
-            val position = BlockPos((chunkX * 16) + rand.nextInt(16), rand.nextInt(spread) + rand.nextInt(spread) + base - spread, (chunkZ * 16) + rand.nextInt(16))
+            val position = BlockPos(
+                (chunkX * 16) + rand.nextInt(16),
+                rand.nextInt(spread) + rand.nextInt(spread) + base - spread,
+                (chunkZ * 16) + rand.nextInt(16)
+            )
+
             placeFunction(worldIn, rand, position)
         }
     }
 
     companion object {
+
         /**
          * Used for random patches (bamboo, flowers).
          *
@@ -62,12 +92,24 @@ interface FWorldGen : IWorldGenerator {
          * @param tries the number of attempts to generate the feature in patch
          * @param placeFunction the function to generate the feature in a patch
          */
-        inline fun placeAround(worldIn: World, rand: Random, chunkPos: ChunkPos, tries: IntRange, placeFunction: (World, Random, BlockPos) -> Unit) {
+        inline fun placeAround(
+            worldIn: World,
+            rand: Random,
+            chunkPos: ChunkPos,
+            tries: IntRange,
+            placeFunction: (World, Random, BlockPos) -> Unit
+        ) {
             for (i in tries) {
                 val xPos = rand.nextInt(16) + 8
                 val zPos = rand.nextInt(16) + 8
-                val yPos = rand.nextInt(worldIn.getHeight(chunkPos.getBlock(0, 0, 0).add(xPos, 0, zPos)).y + 32)
+                val yPos = rand.nextInt(
+                    worldIn.getHeight(
+                        chunkPos.getBlock(0, 0, 0).add(xPos, 0, zPos)
+                    ).y + 32
+                )
+
                 val pos = chunkPos.getBlock(0, 0, 0).add(xPos, yPos, zPos)
+
                 placeFunction(worldIn, rand, pos)
             }
         }
