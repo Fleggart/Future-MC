@@ -22,6 +22,7 @@ const val JEI = "jei"
 const val PAMS_HARVESTCRAFT = "harvestcraft"
 const val PLANTS = "plants2"
 const val QUARK = "quark"
+const val TCONSTRUCT = "tconstruct"
 const val RANDOM_TWEAKS = "randomtweaks"
 const val RANDOM_PATCHES = "random_patches"
 const val VIVECRAFT = "vivecraftforgeextensionscore"
@@ -73,9 +74,13 @@ fun checkVivecraft(): Boolean {
 private inline fun <T> checkModCompat(modid: String, mod: T): T? {
     return if (isModLoaded(modid)) {
         mod
-    } else null
+    } else {
+        null
+    }
 }
 
 fun isModLoaded(modid: String): Boolean {
-    return LOADED_MODS.computeIfAbsent(modid, { Loader.isModLoaded(modid) })
+    return LOADED_MODS.computeIfAbsent(modid) {
+        Loader.isModLoaded(modid)
+    }
 }
