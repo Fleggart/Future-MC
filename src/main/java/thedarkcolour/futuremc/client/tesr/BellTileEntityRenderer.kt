@@ -11,13 +11,11 @@ import kotlin.math.sin
 class BellTileEntityRenderer : TileEntitySpecialRenderer<BellTileEntity>() {
     private val model = BellModel()
 
-    @Suppress("NON_EXHAUSTIVE_WHEN")
     override fun render(
         bell: BellTileEntity, x: Double, y: Double, z: Double,
         partialTicks: Float, destroyStage: Int, alpha: Float
     ) {
         GlStateManager.pushMatrix()
-        //GlStateManager.enableRescaleNormal()
         bindTexture(TEXTURE)
         GlStateManager.translate(x, y, z)
         val f = bell.ringingTicks + partialTicks
@@ -25,7 +23,6 @@ class BellTileEntityRenderer : TileEntitySpecialRenderer<BellTileEntity>() {
         var f2 = 0.0f
 
         if (bell.isRinging) {
-            // sin wave
             val f3 = sin(f / PI).toFloat() / (4.0f + f / 3.0f)
 
             when (bell.ringFacing) {
@@ -33,6 +30,8 @@ class BellTileEntityRenderer : TileEntitySpecialRenderer<BellTileEntity>() {
                 EnumFacing.SOUTH -> f1 = +f3
                 EnumFacing.EAST -> f2 = -f3
                 EnumFacing.WEST -> f2 = +f3
+                EnumFacing.DOWN -> {}
+                EnumFacing.UP -> {}
             }
 
             GlStateManager.rotate(f3, f1, 0.0f, f2)
