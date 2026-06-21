@@ -49,7 +49,6 @@ import thedarkcolour.futuremc.compat.checkTConstruct
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.config.FConfig.updateAquatic
 import thedarkcolour.futuremc.container.ContainerVillager
-import thedarkcolour.futuremc.item.CrossbowItem
 import thedarkcolour.futuremc.registry.FBlocks
 import thedarkcolour.futuremc.registry.FBlocks.HONEY_BLOCK
 import thedarkcolour.futuremc.registry.FBlocks.STRIPPED_ACACIA_LOG
@@ -60,7 +59,6 @@ import thedarkcolour.futuremc.registry.FBlocks.STRIPPED_OAK_LOG
 import thedarkcolour.futuremc.registry.FBlocks.STRIPPED_SPRUCE_LOG
 import thedarkcolour.futuremc.registry.FBlocks.WITHER_ROSE
 import thedarkcolour.futuremc.registry.FItems.HONEY_BOTTLE
-import thedarkcolour.futuremc.registry.FItems.TRIDENT
 import thedarkcolour.futuremc.registry.FSounds
 import thedarkcolour.futuremc.registry.FSounds.HONEY_BOTTLE_DRINK
 import thedarkcolour.futuremc.registry.RegistryEventHandler
@@ -85,9 +83,7 @@ object Events {
         if (FutureMC.CLIENT) {
             MinecraftForge.EVENT_BUS.register(ClientEvents)
         }
-        if (FConfig.villageAndPillage.crossbow) {
-            MinecraftForge.EVENT_BUS.register(CrossbowItem.Companion)
-        }
+        // Crossbow event registration removed
     }
 
     /**
@@ -207,9 +203,9 @@ object Events {
         }
     }
 
-    // wither rose spawn + elder guardian thing
+    // wither rose spawn
     @SubscribeEvent
-    fun spawnWitherRoseOrDropTrident(event: LivingDeathEvent) {
+    fun spawnWitherRose(event: LivingDeathEvent) {
         val entityIn = event.entityLiving
         val worldIn = entityIn.world
 
@@ -230,13 +226,7 @@ object Events {
                     witherRose.item = ItemStack(WITHER_ROSE)
                     worldIn.spawnEntity(witherRose)
                 }
-
-                // elder guardian drop
-                if (updateAquatic.trident && entityIn is EntityElderGuardian) {
-                    val trident = EntityItem(worldIn, entityIn.posX, entityIn.posY, entityIn.posZ)
-                    trident.item = ItemStack(TRIDENT)
-                    worldIn.spawnEntity(trident)
-                }
+                // Elder Guardian trident drop removed
             }
         }
     }
