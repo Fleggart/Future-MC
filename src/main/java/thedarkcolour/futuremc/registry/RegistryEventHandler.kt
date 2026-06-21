@@ -58,8 +58,7 @@ object RegistryEventHandler {
         runOnClient { FEntities.registerEntityRenderers() }
     }
 
-    @SubscribeEvent
-    fun registerEnchantments(event: RegistryEvent.Register<Enchantment>) = FEnchantments.registerEnchantments(event)
+    // Enchantment registration removed
 
     // Go after other biomes so we can add fish to them
     @SubscribeEvent(priority = EventPriority.LOWEST)
