@@ -31,7 +31,6 @@ import thedarkcolour.futuremc.compat.OE
 import thedarkcolour.futuremc.compat.isModLoaded
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.container.ContainerVillager
-import thedarkcolour.futuremc.item.TridentItem
 import thedarkcolour.futuremc.network.NetworkHandler
 
 object ClientEvents {
@@ -66,17 +65,7 @@ object ClientEvents {
 
     @SubscribeEvent
     fun onModelBake(event: ModelBakeEvent) {
-        if (!isModLoaded(OE) || !FConfig.updateAquatic.oceanicExpanse) {
-            if (FConfig.updateAquatic.trident) {
-                val registry = event.modelRegistry
-                val trident = ModelResourceLocation("futuremc:trident", "inventory")
-                val simpleModel = registry.getObject(trident)!!
-                TridentItem.simpleModel = simpleModel
-                val hand = registry.getObject(ModelResourceLocation("futuremc:trident_in_hand", "inventory"))!!
-
-                registry.putObject(trident, TridentBakedModel(hand, simpleModel))
-            }
-        }
+        // Trident model loading removed
     }
 
     @SubscribeEvent
@@ -196,33 +185,7 @@ object ClientEvents {
         offItem: ItemStack,
         hand: EnumHand
     ): ModelBiped.ArmPose? {
-        val stack = if (hand == EnumHand.MAIN_HAND) mainItem else offItem
-
-        if (!stack.isEmpty) {
-            if (playerIn.itemInUseCount > 0) {
-                val action = stack.itemUseAction
-
-                if (action == TridentItem.TRIDENT_USE_ACTION) {
-                    return TridentBakedModel.TRIDENT_ARM_POSE
-                }/* else if (action == CrossbowItem.CROSSBOW_USE_ACTION) {
-                    pose = CrossbowItem.CROSSBOW_ARM_POSE
-                }
-            } else {
-                val flag3 = mainItem.item == FItems.CROSSBOW
-                val flag = CrossbowItem.isCharged(mainItem)
-                val flag1 = offItem.item == FItems.CROSSBOW
-                val flag2 = CrossbowItem.isCharged(offItem)
-
-                if (flag3 && flag) {
-                    pose = CrossbowItem.CROSSBOW_ARM_POSE
-                }
-
-                if (flag1 && flag2) {
-                    pose = CrossbowItem.CROSSBOW_ARM_POSE
-                }*/
-            }
-        }
-
+        // Trident and Crossbow arm pose logic removed
         return null
     }
 }
