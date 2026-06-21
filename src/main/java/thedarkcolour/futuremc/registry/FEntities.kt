@@ -26,16 +26,10 @@ import thedarkcolour.futuremc.entity.fish.tropical.RenderTropicalFish
 import thedarkcolour.futuremc.entity.irongolem.LayerIronGolemCrack
 import thedarkcolour.futuremc.entity.panda.EntityPanda
 import thedarkcolour.futuremc.entity.panda.RenderPanda
-import thedarkcolour.futuremc.entity.trident.RenderTrident
-import thedarkcolour.futuremc.entity.trident.Trident
 
 object FEntities {
     fun registerEntities() {
-        if (!isModLoaded(OE) || !FConfig.updateAquatic.oceanicExpanse) {
-            if (FConfig.updateAquatic.trident) {
-                registerEntity("trident", Trident::class.java, 32, 1)
-            }
-        }
+        // Trident entity registration removed
 
         if (FConfig.villageAndPillage.panda && FConfig.villageAndPillage.bamboo.enabled) {
             registerEntity("panda", EntityPanda::class.java, 36, 3, 15198183, 1776418)
@@ -66,10 +60,9 @@ object FEntities {
     }
 
     fun registerEntityRenderers() {
+        // Trident renderer registration removed
+
         if (!isModLoaded(OE) || !FConfig.updateAquatic.oceanicExpanse) {
-            if (FConfig.updateAquatic.trident) {
-                registerEntityModel { RenderTrident(it) }
-            }
             if (FConfig.updateAquatic.fish.cod.enabled) {
                 registerEntityModel { RenderCod(it) }
             }
@@ -99,8 +92,6 @@ object FEntities {
             }
         }
     }
-
-
 
     /**
      * Helper method to reduce verbosity when registering entities.
