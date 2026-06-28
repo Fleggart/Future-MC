@@ -174,7 +174,6 @@ class EntityTropicalFish(worldIn: World) : EntityGroupFish(worldIn) {
             return (size.primary and 255) or ((size.secondary and 255) shl 8) or ((pattern.metadata and 255) shl 16) or ((bodyColor.metadata and 255) shl 24)
         }
 
-        // Gets the Dye color of the body color from the packed variant
         fun getBodyDyeColor(variant: Int): EnumDyeColor {
             return EnumDyeColor.byMetadata(getBodyColor(variant))
         }
@@ -183,7 +182,6 @@ class EntityTropicalFish(worldIn: World) : EntityGroupFish(worldIn) {
             return (variant and 16711680) shr 16
         }
 
-        // Gets the Dye color of the pattern color from the packed variant
         fun getPatternDyeColor(variant: Int): EnumDyeColor {
             return EnumDyeColor.byMetadata(getPatternColor(variant))
         }
@@ -192,7 +190,6 @@ class EntityTropicalFish(worldIn: World) : EntityGroupFish(worldIn) {
             return (variant and -16777216) shr 24
         }
 
-        // Gets the prefix for this unique variant
         fun getTranslationPrefixSpecial(variant: Int): String {
             return "entity.minecraft.tropical_fish.predefined.$variant"
         }
@@ -211,8 +208,8 @@ class EntityTropicalFish(worldIn: World) : EntityGroupFish(worldIn) {
             return (variant and '\uff00'.toInt() shr 8).coerceAtMost(5)
         }
 
-        private fun getTranslation(i: Int, j: Int) {
-            Type.values()[i + 6 * j].name.toLowerCase(Locale.ROOT)
+        private fun getTranslation(i: Int, j: Int): String {
+            return Type.values()[i + 6 * j].name.lowercase(Locale.ROOT)
         }
     }
 

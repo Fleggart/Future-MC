@@ -155,7 +155,7 @@ class BlockFurnaceAdvanced(private val type: FurnaceType, properties: Properties
     enum class FurnaceType {
         SMOKER, BLAST_FURNACE;
 
-        val type = name.toLowerCase()
+        val type = name.lowercase()
 
         fun canCraft(stack: ItemStack): Boolean {
             return if (this == BLAST_FURNACE) {

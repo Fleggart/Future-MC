@@ -2,17 +2,14 @@ package thedarkcolour.futuremc.client
 
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiMerchant
-import net.minecraft.client.model.ModelBiped
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.renderer.RenderHelper
 import net.minecraft.client.renderer.block.model.ModelResourceLocation
 import net.minecraft.client.resources.I18n
-import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.init.Items
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
-import net.minecraft.util.EnumHand
 import net.minecraft.util.ResourceLocation
 import net.minecraft.world.GameType
 import net.minecraftforge.client.event.GuiOpenEvent
@@ -26,12 +23,10 @@ import org.lwjgl.input.Keyboard
 import org.lwjgl.input.Mouse
 import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.client.gui.GuiVillager
-import thedarkcolour.futuremc.client.render.TridentBakedModel
 import thedarkcolour.futuremc.compat.OE
 import thedarkcolour.futuremc.compat.isModLoaded
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.container.ContainerVillager
-import thedarkcolour.futuremc.item.TridentItem
 import thedarkcolour.futuremc.network.NetworkHandler
 
 object ClientEvents {
@@ -66,17 +61,7 @@ object ClientEvents {
 
     @SubscribeEvent
     fun onModelBake(event: ModelBakeEvent) {
-        if (!isModLoaded(OE) || !FConfig.updateAquatic.oceanicExpanse) {
-            if (FConfig.updateAquatic.trident) {
-                val registry = event.modelRegistry
-                val trident = ModelResourceLocation("futuremc:trident", "inventory")
-                val simpleModel = registry.getObject(trident)!!
-                TridentItem.simpleModel = simpleModel
-                val hand = registry.getObject(ModelResourceLocation("futuremc:trident_in_hand", "inventory"))!!
-
-                registry.putObject(trident, TridentBakedModel(hand, simpleModel))
-            }
-        }
+        // 三叉戟已移除
     }
 
     @SubscribeEvent
@@ -184,45 +169,5 @@ object ClientEvents {
 
     private fun getGameMode(): GameType {
         return Minecraft.getMinecraft().connection?.getPlayerInfo(Minecraft.getMinecraft().player.gameProfile.id)?.gameType ?: GameType.NOT_SET
-    }
-
-    /**
-     * If the player has a Trident (or eventually a Crossbow)
-     * this sets the correct pose for the player's arms.
-     */
-    fun getCustomArmPose(
-        playerIn: EntityPlayer,
-        mainItem: ItemStack,
-        offItem: ItemStack,
-        hand: EnumHand
-    ): ModelBiped.ArmPose? {
-        val stack = if (hand == EnumHand.MAIN_HAND) mainItem else offItem
-
-        if (!stack.isEmpty) {
-            if (playerIn.itemInUseCount > 0) {
-                val action = stack.itemUseAction
-
-                if (action == TridentItem.TRIDENT_USE_ACTION) {
-                    return TridentBakedModel.TRIDENT_ARM_POSE
-                }/* else if (action == CrossbowItem.CROSSBOW_USE_ACTION) {
-                    pose = CrossbowItem.CROSSBOW_ARM_POSE
-                }
-            } else {
-                val flag3 = mainItem.item == FItems.CROSSBOW
-                val flag = CrossbowItem.isCharged(mainItem)
-                val flag1 = offItem.item == FItems.CROSSBOW
-                val flag2 = CrossbowItem.isCharged(offItem)
-
-                if (flag3 && flag) {
-                    pose = CrossbowItem.CROSSBOW_ARM_POSE
-                }
-
-                if (flag1 && flag2) {
-                    pose = CrossbowItem.CROSSBOW_ARM_POSE
-                }*/
-            }
-        }
-
-        return null
     }
 }

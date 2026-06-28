@@ -31,7 +31,7 @@ object FItems {
 
     val NAUTILUS_SHELL = ModeledItem("nautilus_shell").setItemGroup(CreativeTabs.MISC)
     val SCUTE = ModeledItem("scute").setItemGroup(CreativeTabs.MATERIALS)
-    val TRIDENT = TridentItem()
+    // val TRIDENT = TridentItem()  // Removed
     val PUFFERFISH_BUCKET = FishBucketItem("pufferfish_bucket") { EntityPufferfish(it) }
     val COD_BUCKET = FishBucketItem("cod_bucket") { EntityCod(it) }
     val TROPICAL_FISH_BUCKET = FishBucketItem("tropical_fish_bucket") { EntityTropicalFish(it) }
@@ -39,7 +39,7 @@ object FItems {
 
     val DYES = ItemDye()
     val BANNER_PATTERN = BannerPatternItem()
-    val CROSSBOW = CrossbowItem()
+    // val CROSSBOW = CrossbowItem()  // Removed
     val SWEET_BERRIES = SweetBerriesItem()
     val SUSPICIOUS_STEW = SuspiciousStewItem()
     val BAMBOO = BambooItem()
@@ -152,13 +152,9 @@ object FItems {
 
     fun registerItems(items: IForgeRegistry<Item>) {
         if (FConfig.villageAndPillage.dyes) items.register(DYES)
-        if (!isModLoaded(OE) || !FConfig.updateAquatic.oceanicExpanse) {
-            if (FConfig.updateAquatic.trident) items.register(TRIDENT)
-        }
+        // Trident registration removed
         if (FConfig.villageAndPillage.loom.enabled) items.register(BANNER_PATTERN)
-        if (FConfig.villageAndPillage.crossbow) {
-            items.register(CROSSBOW)
-        }
+        // Crossbow registration removed
         if (FConfig.buzzyBees.bee.enabled) items.register(HONEYCOMB)
         if (FConfig.buzzyBees.bee.enabled) items.register(HONEY_BOTTLE)
         if (FConfig.villageAndPillage.sweetBerryBush.enabled) items.register(SWEET_BERRIES)

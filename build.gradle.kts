@@ -1,3 +1,8 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
+import org.jetbrains.kotlin.gradle.dsl.JvmDefaultMode
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 buildscript {
     repositories {
         mavenLocal()
@@ -23,7 +28,7 @@ buildscript {
 plugins {
     java
     idea
-    kotlin("jvm") version "1.9.24"
+    kotlin("jvm") version "2.4.0"
     id("com.gtnewhorizons.retrofuturagradle") version "2.0.2"
 }
 
@@ -47,8 +52,13 @@ minecraft {
 
 val targetFile = "src/main/resources/META-INF/futuremc_at.cfg"
 
-tasks.deobfuscateMergedJarToSrg.get().accessTransformerFiles.from(targetFile)
-tasks.srgifyBinpatchedJar.get().accessTransformerFiles.from(targetFile)
+tasks.deobfuscateMergedJarToSrg.get()
+    .accessTransformerFiles
+    .from(targetFile)
+
+tasks.srgifyBinpatchedJar.get()
+    .accessTransformerFiles
+    .from(targetFile)
 
 repositories {
     maven {
@@ -109,7 +119,9 @@ dependencies {
     // Stuff I care about
     curseMaven("enchantment_descriptions", 250419, 2689502)
     curseMaven("enchantment_descriptions_sources", 250419, 2689503)
+
     curseMaven("fluidlogged_api", 485654, 3698755)
+
     curseMaven("biomes_o_plenty", 220318, 2842510)
     implementation("CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.19.548")
     curseMaven("had-enough-items", 557549, 4810661, runtime = true)
@@ -145,9 +157,12 @@ fun DependencyHandlerScope.curseMaven(
     fileId: Int,
     runtime: Boolean = false
 ) {
-    val dep = rfg.deobf("curse.maven:$modName-$projectId:$fileId")
+    val dep =
+        rfg.deobf(
+            "curse.maven:$modName-$projectId:$fileId"
+        )
 
-    if (runtime) {
+    if(runtime) {
         implementation(dep)
     } else {
         compileOnly(dep)
@@ -155,12 +170,23 @@ fun DependencyHandlerScope.curseMaven(
 }
 
 tasks {
-
     processResources {
-        inputs.property("version", project.version)
-        inputs.property("mcversion", project.minecraft.mcVersion)
+        inputs.property(
+            "version",
+            project.version
+        )
 
-        filesMatching(listOf("mcmod.info", "pack.mcmeta")) {
+        inputs.property(
+            "mcversion",
+            project.minecraft.mcVersion
+        )
+
+        filesMatching(
+            listOf(
+                "mcmod.info",
+                "pack.mcmeta"
+            )
+        ) {
             expand(
                 mapOf(
                     "version" to project.version,
@@ -170,16 +196,15 @@ tasks {
         }
     }
 
-    compileKotlin {
-        kotlinOptions {
-            freeCompilerArgs = listOf(
-                "-Xinline-classes",
-                "-Xjvm-default=all"
+    withType<KotlinCompile>().configureEach {
+        compilerOptions {
+            freeCompilerArgs.addAll(
+                "-Xopt-in=kotlin.RequiresOptIn"
             )
-
-            jvmTarget = "1.8"
-            languageVersion = "1.4"
-            apiVersion = "1.4"
+            jvmTarget.set(JvmTarget.JVM_1_8)
+            languageVersion.set(KotlinVersion.KOTLIN_2_4)
+            apiVersion.set(KotlinVersion.KOTLIN_2_4)
+            jvmDefault.set(JvmDefaultMode.ENABLE)
         }
     }
 
@@ -193,14 +218,20 @@ tasks {
 
     jar {
         manifest {
-            attributes["FMLAT"] = "futuremc_at.cfg"
+            attributes["FMLAT"] =
+                "futuremc_at.cfg"
+
             attributes["FMLCorePlugin"] =
                 "thedarkcolour.futuremc.asm.CoreLoader"
-            attributes["FMLCorePluginContainsFMLMod"] = "true"
+
+            attributes["FMLCorePluginContainsFMLMod"] =
+                "true"
         }
     }
 }
 
 tasks.named("compilePatchedMcKotlin") {
-    dependsOn("decompressDecompiledSources")
+    dependsOn(
+        "decompressDecompiledSources"
+    )
 }

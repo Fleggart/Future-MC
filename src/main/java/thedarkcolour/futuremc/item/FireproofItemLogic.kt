@@ -244,7 +244,7 @@ object FireproofItemLogic {
             var d2 = x
             val d3 = y
             var d4 = z
-            if ((type == MoverType.SELF || type == MoverType.PLAYER) && onGround && isSneaking && this is EntityPlayer) {
+            if ((type == MoverType.SELF || type == MoverType.PLAYER) && onGround && isSneaking) {
                 while (x != 0.0 && world.getCollisionBoxes(
                         this,
                         getEntityBoundingBox().offset(x, (-stepHeight).toDouble(), 0.0)

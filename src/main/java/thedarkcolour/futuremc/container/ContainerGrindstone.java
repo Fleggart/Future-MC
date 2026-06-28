@@ -22,7 +22,6 @@ import org.jetbrains.annotations.NotNull;
 import thedarkcolour.core.gui.FContainer;
 import thedarkcolour.core.inventory.FInventory;
 import thedarkcolour.futuremc.client.gui.GuiGrindstone;
-import thedarkcolour.futuremc.enchantment.EnchantHelper;
 import thedarkcolour.futuremc.registry.FBlocks;
 import thedarkcolour.futuremc.registry.FSounds;
 
@@ -142,29 +141,8 @@ public class ContainerGrindstone extends FContainer {
         else if (((input.anyMatch(stack -> stack.getItem() == Items.ENCHANTED_BOOK))) && !input.getStackInSlot(0).isItemEqual(input.getStackInSlot(1))) {
             int slot = input.getStackInSlot(0).isEmpty() ? 1 : 0;
             ItemStack book = input.getStackInSlot(slot);
-            boolean isCursed = input.anyMatch(EnchantHelper.INSTANCE::isCursed);
 
-            ItemStack outBook;
-            if (isCursed) {
-                outBook = book.copy();
-                outBook.setCount(1);
-                outBook.setTagInfo("StoredEnchantments", new NBTTagList());
-                Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(book);
-
-                for (Enchantment e : enchantments.keySet()) {
-                    if (e.isCurse()) {
-                        ItemEnchantedBook.addEnchantment(outBook, new EnchantmentData(e, 1));
-                    }
-                }
-                enchantments = EnchantmentHelper.getEnchantments(input.getStackInSlot(slot == 1 ? 0 : 1));
-                for (Enchantment e : enchantments.keySet()) {
-                    if (e.isCurse()) {
-                        ItemEnchantedBook.addEnchantment(outBook, new EnchantmentData(e, 1));
-                    }
-                }
-            } else {
-                outBook = new ItemStack(Items.BOOK);
-            }
+            ItemStack outBook = new ItemStack(Items.BOOK);
             output.setStackInSlot(0, outBook);
         }
 
