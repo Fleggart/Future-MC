@@ -26,11 +26,12 @@ import org.lwjgl.input.Keyboard
 import org.lwjgl.input.Mouse
 import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.client.gui.GuiVillager
-import thedarkcolour.futuremc.client.render.TridentBakedModel
+// 已移除 TridentBakedModel 的 import
 import thedarkcolour.futuremc.compat.OE
 import thedarkcolour.futuremc.compat.isModLoaded
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.container.ContainerVillager
+// 已移除 TridentItem 的 import
 import thedarkcolour.futuremc.network.NetworkHandler
 
 object ClientEvents {
@@ -65,7 +66,8 @@ object ClientEvents {
 
     @SubscribeEvent
     fun onModelBake(event: ModelBakeEvent) {
-        // Trident model loading removed
+        // 三叉戟功能已移除，不再注册 TridentBakedModel
+        // 保留此函数以便后续可能的其他模型注册
     }
 
     @SubscribeEvent
@@ -176,8 +178,8 @@ object ClientEvents {
     }
 
     /**
-     * If the player has a Trident (or eventually a Crossbow)
-     * this sets the correct pose for the player's arms.
+     * 三叉戟功能已移除，不再返回自定义手臂姿势
+     * 保留此函数以备将来其他功能使用
      */
     fun getCustomArmPose(
         playerIn: EntityPlayer,
@@ -185,7 +187,7 @@ object ClientEvents {
         offItem: ItemStack,
         hand: EnumHand
     ): ModelBiped.ArmPose? {
-        // Trident and Crossbow arm pose logic removed
+        // 三叉戟已移除，直接返回 null
         return null
     }
 }
