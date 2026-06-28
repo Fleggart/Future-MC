@@ -46,8 +46,9 @@ public final class CoreTransformer implements IClassTransformer {
                 //case "net.minecraft.client.network.NetHandlerPlayClient":
                 //    return patchNetHandlerPlayClient(basicClass);
 
-                case "net.minecraft.client.model.ModelBiped":
-                    return ASMUtil.patch(basicClass, CoreTransformer::patchModelBiped);
+                // 三叉戟功能已移除，不再注入 ModelBiped
+                // case "net.minecraft.client.model.ModelBiped":
+                //     return ASMUtil.patch(basicClass, CoreTransformer::patchModelBiped);
 
                 //case "net.minecraft.client.renderer.RenderItem":
                 //    return ASMUtil.patchRenderItem(basicClass);
@@ -318,17 +319,5 @@ public final class CoreTransformer implements IClassTransformer {
         ASMUtil.patchBeforeReturnTrue(method, toAdd);
     }
 
-    private static void patchModelBiped(ClassNode classNode) {
-        MethodNode method = ASMUtil.findMethod(
-                classNode,
-                "func_78087_a",
-                "setRotationAngles",
-                "(FFFFFFLnet/minecraft/entity/Entity;)V"
-        );
-        InsnList toAdd = ASMUtil.createInsnList(
-            new VarInsnNode(ALOAD, 0),
-            new MethodInsnNode(INVOKESTATIC, "thedarkcolour/futuremc/asm/ASMHooks", "rotateByPose", "(Lnet/minecraft/client/model/ModelBiped;)V", false)
-        );
-        ASMUtil.patchBeforeMcMethod(method, toAdd, "func_178685_a", "copyModelAngles", 1);
-    }
+    // 三叉戟功能已移除，patchModelBiped 方法已删除
 }
