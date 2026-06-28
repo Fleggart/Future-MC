@@ -20,7 +20,6 @@ import net.minecraft.world.GameType
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import thedarkcolour.futuremc.client.ClientEvents
-// 已移除 TridentBakedModel 的 import
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.network.GameModeSwitchPacket
 import thedarkcolour.futuremc.network.NetworkHandler
@@ -105,28 +104,6 @@ object ASMHooks {
     private fun getBlockAtBase(entity: EntityLivingBase): IBlockState {
         val pos = BlockPos(MathHelper.floor(entity.posX), MathHelper.floor(entity.entityBoundingBox.minY), MathHelper.floor(entity.posZ))
         return entity.world.getBlockState(pos)
-    }
-
-    /**
-     * Called in [net.minecraft.client.renderer.entity.RenderPlayer.setModelVisibilities].
-     * 
-     * 三叉戟功能已移除，此函数不再设置自定义手臂姿势
-     */
-    @JvmStatic
-    fun setCustomArmPoses(player: AbstractClientPlayer, model: ModelBiped) {
-        // 三叉戟已移除，不再需要设置自定义手臂姿势
-        // 保留此函数为空，避免调用方报错
-    }
-
-    /**
-     * Called in [net.minecraft.client.model.ModelBiped.setRotationAngles].
-     * 
-     * 三叉戟功能已移除，此函数不再旋转手臂
-     */
-    @JvmStatic
-    fun rotateByPose(model: ModelBiped) {
-        // 三叉戟已移除，不再需要旋转手臂
-        // 保留此函数为空，避免调用方报错
     }
 
     // todo config option
