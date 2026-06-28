@@ -17,8 +17,10 @@ import net.minecraft.util.EnumHandSide
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.MathHelper
 import net.minecraft.world.GameType
+import net.minecraftforge.fml.relauncher.Side
+import net.minecraftforge.fml.relauncher.SideOnly
 import thedarkcolour.futuremc.client.ClientEvents
-import thedarkcolour.futuremc.client.render.TridentBakedModel
+// 已移除 TridentBakedModel 的 import
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.network.GameModeSwitchPacket
 import thedarkcolour.futuremc.network.NetworkHandler
@@ -107,52 +109,30 @@ object ASMHooks {
 
     /**
      * Called in [net.minecraft.client.renderer.entity.RenderPlayer.setModelVisibilities].
-     * Part of the Trident (and eventually Crossbow) coremod.
-     *
-     * Adds functionality for the custom Arm Poses that Future MC adds.
+     * 
+     * 三叉戟功能已移除，此函数不再设置自定义手臂姿势
      */
     @JvmStatic
     fun setCustomArmPoses(player: AbstractClientPlayer, model: ModelBiped) {
-        val mainItem = player.heldItemMainhand
-        val offItem = player.heldItemMainhand
+        // 三叉戟已移除，不再需要设置自定义手臂姿势
+        // 保留此函数为空，避免调用方报错
+    }
 
-        val a = ClientEvents.getCustomArmPose(player, mainItem, offItem, EnumHand.MAIN_HAND) ?: return
-        val b = ClientEvents.getCustomArmPose(player, mainItem, offItem, EnumHand.OFF_HAND) ?: return
-
-        if (player.primaryHand == EnumHandSide.RIGHT) {
-            model.rightArmPose = a
-            model.leftArmPose = b
-        } else {
-            model.leftArmPose = a
-            model.rightArmPose = b
-        }
+    /**
+     * Called in [net.minecraft.client.model.ModelBiped.setRotationAngles].
+     * 
+     * 三叉戟功能已移除，此函数不再旋转手臂
+     */
+    @JvmStatic
+    fun rotateByPose(model: ModelBiped) {
+        // 三叉戟已移除，不再需要旋转手臂
+        // 保留此函数为空，避免调用方报错
     }
 
     // todo config option
     @JvmStatic
     fun creativeEat(player: EntityPlayer): Boolean {
         return player.isCreative
-    }
-
-    /**
-     * Called in [net.minecraft.client.model.ModelBiped.setRotationAngles].
-     * Part of the Trident (and eventually Crossbow) coremod.
-     *
-     * Rotates the player's arms if the poses of those arms are
-     * custom Future MC arm poses.
-     */
-    @JvmStatic
-    fun rotateByPose(model: ModelBiped) {
-        val rightPose = model.rightArmPose
-        val leftPose = model.leftArmPose
-
-        if (rightPose == TridentBakedModel.TRIDENT_ARM_POSE) {
-            model.bipedRightArm.rotateAngleX = model.bipedRightArm.rotateAngleX * 0.5f - Math.PI.toFloat()
-            model.bipedRightArm.rotateAngleY = 0.0f
-        } else if (leftPose == TridentBakedModel.TRIDENT_ARM_POSE) {
-            model.bipedLeftArm.rotateAngleX = model.bipedLeftArm.rotateAngleX * 0.5f - Math.PI.toFloat()
-            model.bipedLeftArm.rotateAngleY = 0.0f
-        }
     }
 
     @JvmStatic
