@@ -2,17 +2,14 @@ package thedarkcolour.futuremc.client
 
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiMerchant
-import net.minecraft.client.model.ModelBiped
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.renderer.RenderHelper
 import net.minecraft.client.renderer.block.model.ModelResourceLocation
 import net.minecraft.client.resources.I18n
-import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.init.Items
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
-import net.minecraft.util.EnumHand
 import net.minecraft.util.ResourceLocation
 import net.minecraft.world.GameType
 import net.minecraftforge.client.event.GuiOpenEvent
@@ -26,7 +23,6 @@ import org.lwjgl.input.Keyboard
 import org.lwjgl.input.Mouse
 import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.client.gui.GuiVillager
-import thedarkcolour.futuremc.client.render.TridentBakedModel
 import thedarkcolour.futuremc.compat.OE
 import thedarkcolour.futuremc.compat.isModLoaded
 import thedarkcolour.futuremc.config.FConfig
@@ -65,7 +61,7 @@ object ClientEvents {
 
     @SubscribeEvent
     fun onModelBake(event: ModelBakeEvent) {
-        // Trident model loading removed
+        // 三叉戟已移除
     }
 
     @SubscribeEvent
@@ -173,19 +169,5 @@ object ClientEvents {
 
     private fun getGameMode(): GameType {
         return Minecraft.getMinecraft().connection?.getPlayerInfo(Minecraft.getMinecraft().player.gameProfile.id)?.gameType ?: GameType.NOT_SET
-    }
-
-    /**
-     * If the player has a Trident (or eventually a Crossbow)
-     * this sets the correct pose for the player's arms.
-     */
-    fun getCustomArmPose(
-        playerIn: EntityPlayer,
-        mainItem: ItemStack,
-        offItem: ItemStack,
-        hand: EnumHand
-    ): ModelBiped.ArmPose? {
-        // Trident and Crossbow arm pose logic removed
-        return null
     }
 }
