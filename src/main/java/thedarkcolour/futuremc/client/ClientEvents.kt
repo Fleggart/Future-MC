@@ -2,17 +2,14 @@ package thedarkcolour.futuremc.client
 
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiMerchant
-import net.minecraft.client.model.ModelBiped
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.renderer.RenderHelper
 import net.minecraft.client.renderer.block.model.ModelResourceLocation
 import net.minecraft.client.resources.I18n
-import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.init.Items
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
-import net.minecraft.util.EnumHand
 import net.minecraft.util.ResourceLocation
 import net.minecraft.world.GameType
 import net.minecraftforge.client.event.GuiOpenEvent
@@ -26,12 +23,10 @@ import org.lwjgl.input.Keyboard
 import org.lwjgl.input.Mouse
 import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.client.gui.GuiVillager
-// 已移除 TridentBakedModel 的 import
 import thedarkcolour.futuremc.compat.OE
 import thedarkcolour.futuremc.compat.isModLoaded
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.container.ContainerVillager
-// 已移除 TridentItem 的 import
 import thedarkcolour.futuremc.network.NetworkHandler
 
 object ClientEvents {
@@ -66,8 +61,7 @@ object ClientEvents {
 
     @SubscribeEvent
     fun onModelBake(event: ModelBakeEvent) {
-        // 三叉戟功能已移除，不再注册 TridentBakedModel
-        // 保留此函数以便后续可能的其他模型注册
+        // 三叉戟已移除
     }
 
     @SubscribeEvent
@@ -175,19 +169,5 @@ object ClientEvents {
 
     private fun getGameMode(): GameType {
         return Minecraft.getMinecraft().connection?.getPlayerInfo(Minecraft.getMinecraft().player.gameProfile.id)?.gameType ?: GameType.NOT_SET
-    }
-
-    /**
-     * 三叉戟功能已移除，不再返回自定义手臂姿势
-     * 保留此函数以备将来其他功能使用
-     */
-    fun getCustomArmPose(
-        playerIn: EntityPlayer,
-        mainItem: ItemStack,
-        offItem: ItemStack,
-        hand: EnumHand
-    ): ModelBiped.ArmPose? {
-        // 三叉戟已移除，直接返回 null
-        return null
     }
 }
