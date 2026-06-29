@@ -33,7 +33,6 @@ import thedarkcolour.core.util.runOnClient
 import thedarkcolour.futuremc.block.buzzybees.BottleDispenserBehavior
 import thedarkcolour.futuremc.block.buzzybees.ShearDispenserBehaviour
 import thedarkcolour.futuremc.block.villagepillage.FlintSteelDispenserBehaviour
-import thedarkcolour.futuremc.capability.FPlayerData
 import thedarkcolour.futuremc.client.gui.GuiType
 import thedarkcolour.futuremc.client.tesr.BellTileEntityRenderer
 import thedarkcolour.futuremc.client.tesr.CampfireRenderer
@@ -112,7 +111,7 @@ object FutureMC {
     @EventHandler
     fun init(event: FMLInitializationEvent) {
         if (DEBUG) {
-            FPlayerData.register()
+            // FPlayerData.register() - removed, feature was never implemented
         }
 
         GuiType.registerGuiHandler()
