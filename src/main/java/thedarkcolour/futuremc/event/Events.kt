@@ -41,7 +41,6 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries
 import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.block.BlockStrippedLog
 import thedarkcolour.futuremc.block.BlockWood
-import thedarkcolour.futuremc.capability.FPlayerDataProvider
 import thedarkcolour.futuremc.client.ClientEvents
 import thedarkcolour.futuremc.compat.checkDynamicTrees
 import thedarkcolour.futuremc.compat.checkQuark
@@ -292,24 +291,7 @@ object Events {
         }
     }
 
-    //@SubscribeEvent
-    fun updateSwimAnimation(event: TickEvent.PlayerTickEvent) {
-        if (event.phase == TickEvent.Phase.END) {
-            val player = event.player
-
-            if (!player.world.isRemote) {
-                player.getCapability(FPlayerDataProvider.DATA_CAP, null)?.also { data ->
-                    if (data.inPowderSnow) {
-                        data.frozenTicks++
-                        //sync()
-                    } else if (data.wasInPowderSnow && data.frozenTicks > 0) {
-                        data.frozenTicks = max(0, data.frozenTicks - 2)
-                        //sync()
-                    }
-                }
-            }
-        }
-    }
+    // Powder snow capability - removed (unused feature)
 
     @SubscribeEvent
     fun onWorldLoad(event: WorldEvent.Load) {
