@@ -43,7 +43,7 @@ object FItems {
     val BANNER_PATTERN = BannerPatternItem()
     // val CROSSBOW = CrossbowItem()  // Removed
     val SWEET_BERRIES = SweetBerriesItem()
-    val SUSPICIOUS_STEW = SuspiciousStewItem()
+    // val SUSPICIOUS_STEW = SuspiciousStewItem()  // Removed
     val BAMBOO = BambooItem()
 
     val HONEYCOMB = ModeledItem("honeycomb").setItemGroup(CreativeTabs.MISC)
@@ -160,7 +160,8 @@ object FItems {
         if (FConfig.buzzyBees.bee.enabled) items.register(HONEYCOMB)
         if (FConfig.buzzyBees.bee.enabled) items.register(HONEY_BOTTLE)
         if (FConfig.villageAndPillage.sweetBerryBush.enabled) items.register(SWEET_BERRIES)
-        if (FConfig.villageAndPillage.suspiciousStew) items.register(SUSPICIOUS_STEW)
+        // SuspiciousStew registration removed
+        // if (FConfig.villageAndPillage.suspiciousStew) items.register(SUSPICIOUS_STEW)
         if (FConfig.villageAndPillage.bamboo.enabled) items.register(BAMBOO)
         
         // 移除鱼类桶物品注册
