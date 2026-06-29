@@ -1,4 +1,4 @@
-Name: Build Mod
+name: Build Mod
 
 on:
   push:
@@ -26,12 +26,9 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    # 1. 设置 Gradle 并在后台自动启用高效的缓存机制
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4
 
-    # 2. 标准的构建命令：去掉 clean，去掉 --refresh-dependencies，去掉 --no-daemon
-    # 允许 Gradle 复用 Daemon 进程以及上一次 GitHub Actions 缓存的反编译 JAR 包
     - name: Build with Gradle
       run: ./gradlew build
 
