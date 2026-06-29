@@ -14,42 +14,23 @@ import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.compat.OE
 import thedarkcolour.futuremc.compat.isModLoaded
 import thedarkcolour.futuremc.config.FConfig
-// 移除鱼类实体导入
-// import thedarkcolour.futuremc.entity.fish.cod.EntityCod
-// import thedarkcolour.futuremc.entity.fish.pufferfish.EntityPufferfish
-// import thedarkcolour.futuremc.entity.fish.salmon.EntitySalmon
-// import thedarkcolour.futuremc.entity.fish.tropical.EntityTropicalFish
 import thedarkcolour.futuremc.item.*
 
-/**
- * All items and block items in Future MC
- *
- * @author TheDarkColour
- */
 @Suppress("MemberVisibilityCanBePrivate", "HasPlatformType", "DuplicatedCode")
 object FItems {
     val DEBUGGER = DebuggerItem()
 
     val NAUTILUS_SHELL = ModeledItem("nautilus_shell").setItemGroup(CreativeTabs.MISC)
     val SCUTE = ModeledItem("scute").setItemGroup(CreativeTabs.MATERIALS)
-    // val TRIDENT = TridentItem()  // Removed
-    // 移除鱼类桶物品
-    // val PUFFERFISH_BUCKET = FishBucketItem("pufferfish_bucket") { EntityPufferfish(it) }
-    // val COD_BUCKET = FishBucketItem("cod_bucket") { EntityCod(it) }
-    // val TROPICAL_FISH_BUCKET = FishBucketItem("tropical_fish_bucket") { EntityTropicalFish(it) }
-    // val SALMON_BUCKET = FishBucketItem("salmon_bucket") { EntitySalmon(it) }
 
     val DYES = ItemDye()
     val BANNER_PATTERN = BannerPatternItem()
-    // val CROSSBOW = CrossbowItem()  // Removed
     val SWEET_BERRIES = SweetBerriesItem()
-    // val SUSPICIOUS_STEW = SuspiciousStewItem()  // Removed
     val BAMBOO = BambooItem()
 
     val HONEYCOMB = ModeledItem("honeycomb").setItemGroup(CreativeTabs.MISC)
     val HONEY_BOTTLE = HoneyBottleItem()
 
-    // see Util.kt for Item.setItemGroup
     val NETHERITE_INGOT = FireproofItem("netherite_ingot").setItemGroup(CreativeTabs.MATERIALS)
     val NETHERITE_SCRAP = FireproofItem("netherite_scrap").setItemGroup(CreativeTabs.MATERIALS)
     val NETHERITE_AXE = FireproofAxeItem("netherite_axe", FToolMaterial.NETHERITE, 9.0f, -3.0f).setItemGroup(CreativeTabs.TOOLS)
@@ -154,33 +135,16 @@ object FItems {
 
     fun registerItems(items: IForgeRegistry<Item>) {
         if (FConfig.villageAndPillage.dyes) items.register(DYES)
-        // Trident registration removed
         if (FConfig.villageAndPillage.loom.enabled) items.register(BANNER_PATTERN)
-        // Crossbow registration removed
         if (FConfig.buzzyBees.bee.enabled) items.register(HONEYCOMB)
         if (FConfig.buzzyBees.bee.enabled) items.register(HONEY_BOTTLE)
         if (FConfig.villageAndPillage.sweetBerryBush.enabled) items.register(SWEET_BERRIES)
-        // SuspiciousStew registration removed
-        // if (FConfig.villageAndPillage.suspiciousStew) items.register(SUSPICIOUS_STEW)
         if (FConfig.villageAndPillage.bamboo.enabled) items.register(BAMBOO)
         
-        // 移除鱼类桶物品注册
-        // if (!isModLoaded(OE) || !FConfig.updateAquatic.oceanicExpanse) {
-        //     if (FConfig.updateAquatic.fish.pufferfish.enabled) items.register(PUFFERFISH_BUCKET)
-        //     if (FConfig.updateAquatic.fish.salmon.enabled) items.register(SALMON_BUCKET)
-        //     if (FConfig.updateAquatic.fish.cod.enabled) items.register(COD_BUCKET)
-        //     if (FConfig.updateAquatic.fish.tropicalFish.enabled) items.register(TROPICAL_FISH_BUCKET)
-        //     if (FConfig.updateAquatic.nautilusShell) items.register(NAUTILUS_SHELL)
-        // }
-        
-        // 保留 NAUTILUS_SHELL 的注册（如果需要的话，可以单独控制）
         if (FConfig.updateAquatic.nautilusShell) items.register(NAUTILUS_SHELL)
 
-
         if (FutureMC.DEBUG) items.register(DEBUGGER)
-        //items.register(AGRO)
 
-        // todo add config
         if (FutureMC.DEBUG) {
             items.register(NETHER_GOLD_ORE)
             items.register(BLACKSTONE)
@@ -282,8 +246,6 @@ object FItems {
         if (FConfig.cavesNCliffs.otherside)
             items.register(RECORD_OTHERSIDE)
 
-        //register(ItemSeagrass(), FConfig.updateAquatic.seagrass)
-
         registerOres()
     }
 
@@ -357,8 +319,6 @@ object FItems {
         if (FConfig.netherUpdate.netherite) {
             OreDictionary.registerOre("blockNetherite", NETHERITE_BLOCK)
             OreDictionary.registerOre("ingotNetherite", NETHERITE_INGOT)
-
-            // needed so that mod compat works properly
             OreDictionary.registerOre("ingotAncientDebris", NETHERITE_SCRAP)
             OreDictionary.registerOre("oreAncientDebris", ANCIENT_DEBRIS)
         }
