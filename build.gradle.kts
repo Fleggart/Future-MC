@@ -125,8 +125,7 @@ dependencies {
     curseMaven("biomes_o_plenty", 220318, 2842510)
     implementation("CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.19.548")
     curseMaven("had-enough-items", 557549, 4810661, runtime = true)
-    api("net.shadowfacts:Forgelin:1.8.4")
-
+    curseMaven("ChAoS_UnItY_", 456403, 8248535)
     // Optional mod compat
     curseMaven("dynamic_trees", 252818, 3260881)
     curseMaven("pams_harvestcraft", 221857, 2904825)
