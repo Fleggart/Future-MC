@@ -67,7 +67,6 @@ object FBlocks {
     val SMOOTH_SANDSTONE = FBlock(Properties(Material.ROCK, "smooth_sandstone").color(MapColor.SAND).hardnessAndResistance(2.0f, 6.0f).group(CreativeTabs.BUILDING_BLOCKS))
     val SMOOTH_QUARTZ = FBlock(Properties(Material.ROCK, "smooth_quartz").color(MapColor.QUARTZ).hardnessAndResistance(2.0f, 6.0f).group(CreativeTabs.BUILDING_BLOCKS))
     val SMOOTH_RED_SANDSTONE = FBlock(Properties(Material.ROCK, "smooth_red_sandstone").color(MapColor.ADOBE).hardnessAndResistance(2.0f, 6.0f).group(CreativeTabs.BUILDING_BLOCKS))
-    // 删除这一行：val BLUE_ICE = BlueIceBlock(...)
     val STRIPPED_ACACIA_WOOD = BlockWood("stripped_acacia_wood")
     val STRIPPED_JUNGLE_WOOD = BlockWood("stripped_jungle_wood")
     val STRIPPED_BIRCH_WOOD = BlockWood("stripped_birch_wood")
@@ -108,9 +107,7 @@ object FBlocks {
     // val CRIMSON_NYLIUM = NyliumBlock(Properties(Material.ROCK, "crimson_nylium").color(MapColor.RED))
     // val WARPED_WART_BLOCK = FBlock(Properties(Material.GRASS, "warped_wart_block").color(MapColor.CYAN))
 
-    // 删除这一行：val NETHER_GOLD_ORE = NetherGoldOreBlock(...)
     val BLACKSTONE = FBlock(Properties(Material.ROCK, "blackstone").color(MapColor.BLACK).hardnessAndResistance(1.5f, 6.0f))
-    val BLACKSTONE_STAIRS = FStairsBlock(BLACKSTONE.defaultState, Properties(Material.ROCK, "blackstone_stairs").color(MapColor.BLACK).hardnessAndResistance(1.5f, 6.0f))
     val BLACKSTONE_WALL = BlockWall(Properties(Material.ROCK, "blackstone_wall").color(MapColor.BLACK).hardnessAndResistance(1.5f, 6.0f))
     val BLACKSTONE_SLAB = FSlabBlock(Properties(Material.ROCK, "blackstone_slab").color(MapColor.BLACK).hardnessAndResistance(2.0F, 6.0F))
     val POLISHED_BLACKSTONE = FBlock(Properties(Material.ROCK, "polished_blackstone").color(MapColor.BLACK).hardnessAndResistance(2.0F, 6.0F))
@@ -118,10 +115,8 @@ object FBlocks {
     val CRACKED_POLISHED_BLACKSTONE_BRICKS = FBlock(Properties(Material.ROCK, "cracked_polished_blackstone_bricks"))
     val CHISELED_POLISHED_BLACKSTONE = FBlock(Properties(Material.ROCK, "chiseled_polished_blackstone").hardnessAndResistance(1.5F, 6.0F))
     val POLISHED_BLACKSTONE_BRICK_SLAB = FSlabBlock(Properties(Material.ROCK, "polished_blackstone_brick_slab").hardnessAndResistance(2.0F, 6.0F))
-    val POLISHED_BLACKSTONE_BRICK_STAIRS = FStairsBlock(POLISHED_BLACKSTONE_BRICKS.defaultState, Properties(Material.ROCK, "polished_blackstone_brick_stairs").color(MapColor.BLACK).hardnessAndResistance(1.5F, 6.0F))
     val POLISHED_BLACKSTONE_BRICK_WALL = BlockWall(Properties(Material.ROCK, "polished_blackstone_brick_wall").color(MapColor.BLACK).hardnessAndResistance(1.5F, 6.0F))
     val GILDED_BLACKSTONE = FBlock(Properties(Material.ROCK, "gilded_blackstone").color(MapColor.BLACK).sound(FSounds.GILDED_BLACKSTONE))
-    val POLISHED_BLACKSTONE_STAIRS = FStairsBlock(POLISHED_BLACKSTONE.defaultState, Properties(Material.ROCK, "polished_blackstone_stairs").color(MapColor.BLACK).hardnessAndResistance(2.0F, 6.0F))
     val POLISHED_BLACKSTONE_SLAB = FSlabBlock(Properties(Material.ROCK, "polished_blackstone_slab").color(MapColor.BLACK).hardnessAndResistance(1.5F, 6.0F))
     val POLISHED_BLACKSTONE_WALL = BlockWall(Properties(Material.ROCK, "polished_blackstone_wall").color(MapColor.BLACK).hardnessAndResistance(2.0F, 6.0F))
 
@@ -227,8 +222,6 @@ object FBlocks {
         if (FConfig.villageAndPillage.smoothRedSandstone)
             blocks.register(SMOOTH_RED_SANDSTONE)
         if (!isModLoaded(OE) || !FConfig.updateAquatic.oceanicExpanse) {
-            // 删除这个 if 块：if (FConfig.updateAquatic.blueIce) blocks.register(BLUE_ICE)
-
             if (FConfig.updateAquatic.wood.strippedAcacia)
                 blocks.register(STRIPPED_ACACIA_WOOD)
             if (FConfig.updateAquatic.wood.strippedJungle)
@@ -279,9 +272,7 @@ object FBlocks {
             blocks.registerAll(SEAGRASS, SEAGRASS_FLOWING)
 
         if (FutureMC.DEBUG) {
-            // 删除这一行：blocks.register(NETHER_GOLD_ORE)
             blocks.register(BLACKSTONE)
-            blocks.register(BLACKSTONE_STAIRS)
             blocks.register(BLACKSTONE_WALL)
             blocks.register(BLACKSTONE_SLAB)
             blocks.register(POLISHED_BLACKSTONE)
@@ -289,10 +280,8 @@ object FBlocks {
             blocks.register(CRACKED_POLISHED_BLACKSTONE_BRICKS)
             blocks.register(CHISELED_POLISHED_BLACKSTONE)
             blocks.register(POLISHED_BLACKSTONE_BRICK_SLAB)
-            blocks.register(POLISHED_BLACKSTONE_BRICK_STAIRS)
             blocks.register(POLISHED_BLACKSTONE_BRICK_WALL)
             blocks.register(GILDED_BLACKSTONE)
-            blocks.register(POLISHED_BLACKSTONE_STAIRS)
             blocks.register(POLISHED_BLACKSTONE_SLAB)
             blocks.register(POLISHED_BLACKSTONE_WALL)
         }
