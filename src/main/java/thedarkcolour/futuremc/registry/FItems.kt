@@ -120,7 +120,6 @@ object FItems {
     val GILDED_BLACKSTONE = ModeledItemBlock(FBlocks.GILDED_BLACKSTONE)
     val POLISHED_BLACKSTONE_STAIRS = ModeledItemBlock(FBlocks.POLISHED_BLACKSTONE_STAIRS)
     val POLISHED_BLACKSTONE_SLAB = ModeledItemBlock(FBlocks.POLISHED_BLACKSTONE_SLAB)
-    val POLISHED_BLACKSTONE_BUTTON = ModeledItemBlock(FBlocks.POLISHED_BLACKSTONE_BUTTON)
     val POLISHED_BLACKSTONE_WALL = ModeledItemBlock(FBlocks.POLISHED_BLACKSTONE_WALL)
 
     val SOUL_FIRE_LANTERN = ModeledItemBlock(FBlocks.SOUL_FIRE_LANTERN)
@@ -161,7 +160,6 @@ object FItems {
             items.register(GILDED_BLACKSTONE)
             items.register(POLISHED_BLACKSTONE_STAIRS)
             items.register(POLISHED_BLACKSTONE_SLAB)
-            items.register(POLISHED_BLACKSTONE_BUTTON)
             items.register(POLISHED_BLACKSTONE_WALL)
         }
 
