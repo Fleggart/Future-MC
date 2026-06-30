@@ -86,7 +86,7 @@ object FItems {
     val SMOOTH_SANDSTONE = ModeledItemBlock(FBlocks.SMOOTH_SANDSTONE)
     val SMOOTH_QUARTZ = ModeledItemBlock(FBlocks.SMOOTH_QUARTZ)
     val SMOOTH_RED_SANDSTONE = ModeledItemBlock(FBlocks.SMOOTH_RED_SANDSTONE)
-    val BLUE_ICE = ModeledItemBlock(FBlocks.BLUE_ICE)
+    // 删除这一行：val BLUE_ICE = ModeledItemBlock(FBlocks.BLUE_ICE)
     val STRIPPED_ACACIA_WOOD = ModeledItemBlock(FBlocks.STRIPPED_ACACIA_WOOD)
     val STRIPPED_JUNGLE_WOOD = ModeledItemBlock(FBlocks.STRIPPED_JUNGLE_WOOD)
     val STRIPPED_BIRCH_WOOD = ModeledItemBlock(FBlocks.STRIPPED_BIRCH_WOOD)
@@ -208,7 +208,7 @@ object FItems {
         if (FConfig.villageAndPillage.smoothQuartz) items.register(SMOOTH_QUARTZ)
         if (FConfig.villageAndPillage.smoothRedSandstone) items.register(SMOOTH_RED_SANDSTONE)
         if (!isModLoaded(OE) || !FConfig.updateAquatic.oceanicExpanse) {
-            if (FConfig.updateAquatic.blueIce) items.register(BLUE_ICE)
+            // 删除这个 if 块：if (FConfig.updateAquatic.blueIce) items.register(BLUE_ICE)
             if (FConfig.updateAquatic.wood.strippedAcacia) items.register(STRIPPED_ACACIA_WOOD)
             if (FConfig.updateAquatic.wood.strippedJungle) items.register(STRIPPED_JUNGLE_WOOD)
             if (FConfig.updateAquatic.wood.strippedBirch) items.register(STRIPPED_BIRCH_WOOD)
