@@ -67,7 +67,7 @@ object FBlocks {
     val SMOOTH_SANDSTONE = FBlock(Properties(Material.ROCK, "smooth_sandstone").color(MapColor.SAND).hardnessAndResistance(2.0f, 6.0f).group(CreativeTabs.BUILDING_BLOCKS))
     val SMOOTH_QUARTZ = FBlock(Properties(Material.ROCK, "smooth_quartz").color(MapColor.QUARTZ).hardnessAndResistance(2.0f, 6.0f).group(CreativeTabs.BUILDING_BLOCKS))
     val SMOOTH_RED_SANDSTONE = FBlock(Properties(Material.ROCK, "smooth_red_sandstone").color(MapColor.ADOBE).hardnessAndResistance(2.0f, 6.0f).group(CreativeTabs.BUILDING_BLOCKS))
-    val BLUE_ICE = BlueIceBlock(Properties(Material.PACKED_ICE, "blue_ice").slipperiness(0.989f).hardnessAndResistance(2.8f).sound(SoundType.GLASS).group(CreativeTabs.BUILDING_BLOCKS))
+    // 删除这一行：val BLUE_ICE = BlueIceBlock(...)
     val STRIPPED_ACACIA_WOOD = BlockWood("stripped_acacia_wood")
     val STRIPPED_JUNGLE_WOOD = BlockWood("stripped_jungle_wood")
     val STRIPPED_BIRCH_WOOD = BlockWood("stripped_birch_wood")
@@ -227,8 +227,7 @@ object FBlocks {
         if (FConfig.villageAndPillage.smoothRedSandstone)
             blocks.register(SMOOTH_RED_SANDSTONE)
         if (!isModLoaded(OE) || !FConfig.updateAquatic.oceanicExpanse) {
-            if (FConfig.updateAquatic.blueIce)
-                blocks.register(BLUE_ICE)
+            // 删除这个 if 块：if (FConfig.updateAquatic.blueIce) blocks.register(BLUE_ICE)
 
             if (FConfig.updateAquatic.wood.strippedAcacia)
                 blocks.register(STRIPPED_ACACIA_WOOD)
