@@ -117,9 +117,6 @@ object FBlocks {
     val GILDED_BLACKSTONE = FBlock(Properties(Material.ROCK, "gilded_blackstone").color(MapColor.BLACK).sound(FSounds.GILDED_BLACKSTONE))
     val POLISHED_BLACKSTONE_WALL = BlockWall(Properties(Material.ROCK, "polished_blackstone_wall").color(MapColor.BLACK).hardnessAndResistance(2.0F, 6.0F))
 
-    val SEAGRASS = BlockSeaGrass()
-    val SEAGRASS_FLOWING = SEAGRASS.flowing
-
     val SCAFFOLDING = ScaffoldingBlock(Properties(Material.CIRCUITS, "scaffolding").hardnessAndResistance(0f, 0f).sound(FSounds.SCAFFOLDING).group(CreativeTabs.DECORATIONS))
     val BELL = BlockBell(Properties(Material.IRON, "bell").hardnessAndResistance(5.0f).sound(SoundType.ANVIL).group(CreativeTabs.DECORATIONS))
 
@@ -265,8 +262,6 @@ object FBlocks {
             blocks.register(CHAIN)
         if (FConfig.netherUpdate.netherite)
             blocks.registerAll(NETHERITE_BLOCK, ANCIENT_DEBRIS)
-        if (FutureMC.DEBUG)
-            blocks.registerAll(SEAGRASS, SEAGRASS_FLOWING)
 
         if (FutureMC.DEBUG) {
             blocks.register(BLACKSTONE)
@@ -296,8 +291,6 @@ object FBlocks {
         registerTE("futuremc:composter", TileComposter::class.java, FConfig.villageAndPillage.composter)
         registerTE("futuremc:campfire", CampfireTile::class.java, FConfig.villageAndPillage.campfire.enabled)
         registerTE("futuremc:sign", WoodenSignTile::class.java, newSigns.acacia || newSigns.birch || newSigns.darkOak || newSigns.jungle || newSigns.spruce)
-
-        registerTE("futuremc:water_renderer", TileSeagrassRenderer::class.java, FutureMC.DEBUG)
     }
 
     fun noOceanicExpanse(): Boolean {
