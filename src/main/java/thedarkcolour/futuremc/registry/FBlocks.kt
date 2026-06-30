@@ -109,15 +109,12 @@ object FBlocks {
 
     val BLACKSTONE = FBlock(Properties(Material.ROCK, "blackstone").color(MapColor.BLACK).hardnessAndResistance(1.5f, 6.0f))
     val BLACKSTONE_WALL = BlockWall(Properties(Material.ROCK, "blackstone_wall").color(MapColor.BLACK).hardnessAndResistance(1.5f, 6.0f))
-    val BLACKSTONE_SLAB = FSlabBlock(Properties(Material.ROCK, "blackstone_slab").color(MapColor.BLACK).hardnessAndResistance(2.0F, 6.0F))
     val POLISHED_BLACKSTONE = FBlock(Properties(Material.ROCK, "polished_blackstone").color(MapColor.BLACK).hardnessAndResistance(2.0F, 6.0F))
     val POLISHED_BLACKSTONE_BRICKS = FBlock(Properties(Material.ROCK, "polished_blackstone_bricks").color(MapColor.BLACK).hardnessAndResistance(1.5F, 6.0F))
     val CRACKED_POLISHED_BLACKSTONE_BRICKS = FBlock(Properties(Material.ROCK, "cracked_polished_blackstone_bricks"))
     val CHISELED_POLISHED_BLACKSTONE = FBlock(Properties(Material.ROCK, "chiseled_polished_blackstone").hardnessAndResistance(1.5F, 6.0F))
-    val POLISHED_BLACKSTONE_BRICK_SLAB = FSlabBlock(Properties(Material.ROCK, "polished_blackstone_brick_slab").hardnessAndResistance(2.0F, 6.0F))
     val POLISHED_BLACKSTONE_BRICK_WALL = BlockWall(Properties(Material.ROCK, "polished_blackstone_brick_wall").color(MapColor.BLACK).hardnessAndResistance(1.5F, 6.0F))
     val GILDED_BLACKSTONE = FBlock(Properties(Material.ROCK, "gilded_blackstone").color(MapColor.BLACK).sound(FSounds.GILDED_BLACKSTONE))
-    val POLISHED_BLACKSTONE_SLAB = FSlabBlock(Properties(Material.ROCK, "polished_blackstone_slab").color(MapColor.BLACK).hardnessAndResistance(1.5F, 6.0F))
     val POLISHED_BLACKSTONE_WALL = BlockWall(Properties(Material.ROCK, "polished_blackstone_wall").color(MapColor.BLACK).hardnessAndResistance(2.0F, 6.0F))
 
     val SEAGRASS = BlockSeaGrass()
@@ -274,15 +271,12 @@ object FBlocks {
         if (FutureMC.DEBUG) {
             blocks.register(BLACKSTONE)
             blocks.register(BLACKSTONE_WALL)
-            blocks.register(BLACKSTONE_SLAB)
             blocks.register(POLISHED_BLACKSTONE)
             blocks.register(POLISHED_BLACKSTONE_BRICKS)
             blocks.register(CRACKED_POLISHED_BLACKSTONE_BRICKS)
             blocks.register(CHISELED_POLISHED_BLACKSTONE)
-            blocks.register(POLISHED_BLACKSTONE_BRICK_SLAB)
             blocks.register(POLISHED_BLACKSTONE_BRICK_WALL)
             blocks.register(GILDED_BLACKSTONE)
-            blocks.register(POLISHED_BLACKSTONE_SLAB)
             blocks.register(POLISHED_BLACKSTONE_WALL)
         }
 
