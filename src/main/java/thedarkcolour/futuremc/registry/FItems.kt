@@ -86,7 +86,6 @@ object FItems {
     val SMOOTH_SANDSTONE = ModeledItemBlock(FBlocks.SMOOTH_SANDSTONE)
     val SMOOTH_QUARTZ = ModeledItemBlock(FBlocks.SMOOTH_QUARTZ)
     val SMOOTH_RED_SANDSTONE = ModeledItemBlock(FBlocks.SMOOTH_RED_SANDSTONE)
-    // 删除这一行：val BLUE_ICE = ModeledItemBlock(FBlocks.BLUE_ICE)
     val STRIPPED_ACACIA_WOOD = ModeledItemBlock(FBlocks.STRIPPED_ACACIA_WOOD)
     val STRIPPED_JUNGLE_WOOD = ModeledItemBlock(FBlocks.STRIPPED_JUNGLE_WOOD)
     val STRIPPED_BIRCH_WOOD = ModeledItemBlock(FBlocks.STRIPPED_BIRCH_WOOD)
@@ -105,9 +104,7 @@ object FItems {
     val SPRUCE_TRAPDOOR = ModeledItemBlock(FBlocks.SPRUCE_TRAPDOOR)
     val DARK_OAK_TRAPDOOR = ModeledItemBlock(FBlocks.DARK_OAK_TRAPDOOR)
 
-    // 删除这一行：val NETHER_GOLD_ORE = ModeledItemBlock(FBlocks.NETHER_GOLD_ORE)
     val BLACKSTONE = ModeledItemBlock(FBlocks.BLACKSTONE)
-    val BLACKSTONE_STAIRS = ModeledItemBlock(FBlocks.BLACKSTONE_STAIRS)
     val BLACKSTONE_WALL = ModeledItemBlock(FBlocks.BLACKSTONE_WALL)
     val BLACKSTONE_SLAB = ModeledItemBlock(FBlocks.BLACKSTONE_SLAB)
     val POLISHED_BLACKSTONE = ModeledItemBlock(FBlocks.POLISHED_BLACKSTONE)
@@ -115,10 +112,8 @@ object FItems {
     val CRACKED_POLISHED_BLACKSTONE_BRICKS = ModeledItemBlock(FBlocks.CRACKED_POLISHED_BLACKSTONE_BRICKS)
     val CHISELED_POLISHED_BLACKSTONE = ModeledItemBlock(FBlocks.CHISELED_POLISHED_BLACKSTONE)
     val POLISHED_BLACKSTONE_BRICK_SLAB = ModeledItemBlock(FBlocks.POLISHED_BLACKSTONE_BRICK_SLAB)
-    val POLISHED_BLACKSTONE_BRICK_STAIRS = ModeledItemBlock(FBlocks.POLISHED_BLACKSTONE_BRICK_STAIRS)
     val POLISHED_BLACKSTONE_BRICK_WALL = ModeledItemBlock(FBlocks.POLISHED_BLACKSTONE_BRICK_WALL)
     val GILDED_BLACKSTONE = ModeledItemBlock(FBlocks.GILDED_BLACKSTONE)
-    val POLISHED_BLACKSTONE_STAIRS = ModeledItemBlock(FBlocks.POLISHED_BLACKSTONE_STAIRS)
     val POLISHED_BLACKSTONE_SLAB = ModeledItemBlock(FBlocks.POLISHED_BLACKSTONE_SLAB)
     val POLISHED_BLACKSTONE_WALL = ModeledItemBlock(FBlocks.POLISHED_BLACKSTONE_WALL)
 
@@ -145,9 +140,7 @@ object FItems {
         if (FutureMC.DEBUG) items.register(DEBUGGER)
 
         if (FutureMC.DEBUG) {
-            // 删除这一行：items.register(NETHER_GOLD_ORE)
             items.register(BLACKSTONE)
-            items.register(BLACKSTONE_STAIRS)
             items.register(BLACKSTONE_WALL)
             items.register(BLACKSTONE_SLAB)
             items.register(POLISHED_BLACKSTONE)
@@ -155,10 +148,8 @@ object FItems {
             items.register(CRACKED_POLISHED_BLACKSTONE_BRICKS)
             items.register(CHISELED_POLISHED_BLACKSTONE)
             items.register(POLISHED_BLACKSTONE_BRICK_SLAB)
-            items.register(POLISHED_BLACKSTONE_BRICK_STAIRS)
             items.register(POLISHED_BLACKSTONE_BRICK_WALL)
             items.register(GILDED_BLACKSTONE)
-            items.register(POLISHED_BLACKSTONE_STAIRS)
             items.register(POLISHED_BLACKSTONE_SLAB)
             items.register(POLISHED_BLACKSTONE_WALL)
         }
@@ -208,7 +199,6 @@ object FItems {
         if (FConfig.villageAndPillage.smoothQuartz) items.register(SMOOTH_QUARTZ)
         if (FConfig.villageAndPillage.smoothRedSandstone) items.register(SMOOTH_RED_SANDSTONE)
         if (!isModLoaded(OE) || !FConfig.updateAquatic.oceanicExpanse) {
-            // 删除这个 if 块：if (FConfig.updateAquatic.blueIce) items.register(BLUE_ICE)
             if (FConfig.updateAquatic.wood.strippedAcacia) items.register(STRIPPED_ACACIA_WOOD)
             if (FConfig.updateAquatic.wood.strippedJungle) items.register(STRIPPED_JUNGLE_WOOD)
             if (FConfig.updateAquatic.wood.strippedBirch) items.register(STRIPPED_BIRCH_WOOD)
