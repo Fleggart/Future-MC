@@ -106,15 +106,12 @@ object FItems {
 
     val BLACKSTONE = ModeledItemBlock(FBlocks.BLACKSTONE)
     val BLACKSTONE_WALL = ModeledItemBlock(FBlocks.BLACKSTONE_WALL)
-    val BLACKSTONE_SLAB = ModeledItemBlock(FBlocks.BLACKSTONE_SLAB)
     val POLISHED_BLACKSTONE = ModeledItemBlock(FBlocks.POLISHED_BLACKSTONE)
     val POLISHED_BLACKSTONE_BRICKS = ModeledItemBlock(FBlocks.POLISHED_BLACKSTONE_BRICKS)
     val CRACKED_POLISHED_BLACKSTONE_BRICKS = ModeledItemBlock(FBlocks.CRACKED_POLISHED_BLACKSTONE_BRICKS)
     val CHISELED_POLISHED_BLACKSTONE = ModeledItemBlock(FBlocks.CHISELED_POLISHED_BLACKSTONE)
-    val POLISHED_BLACKSTONE_BRICK_SLAB = ModeledItemBlock(FBlocks.POLISHED_BLACKSTONE_BRICK_SLAB)
     val POLISHED_BLACKSTONE_BRICK_WALL = ModeledItemBlock(FBlocks.POLISHED_BLACKSTONE_BRICK_WALL)
     val GILDED_BLACKSTONE = ModeledItemBlock(FBlocks.GILDED_BLACKSTONE)
-    val POLISHED_BLACKSTONE_SLAB = ModeledItemBlock(FBlocks.POLISHED_BLACKSTONE_SLAB)
     val POLISHED_BLACKSTONE_WALL = ModeledItemBlock(FBlocks.POLISHED_BLACKSTONE_WALL)
 
     val SOUL_FIRE_LANTERN = ModeledItemBlock(FBlocks.SOUL_FIRE_LANTERN)
@@ -142,15 +139,12 @@ object FItems {
         if (FutureMC.DEBUG) {
             items.register(BLACKSTONE)
             items.register(BLACKSTONE_WALL)
-            items.register(BLACKSTONE_SLAB)
             items.register(POLISHED_BLACKSTONE)
             items.register(POLISHED_BLACKSTONE_BRICKS)
             items.register(CRACKED_POLISHED_BLACKSTONE_BRICKS)
             items.register(CHISELED_POLISHED_BLACKSTONE)
-            items.register(POLISHED_BLACKSTONE_BRICK_SLAB)
             items.register(POLISHED_BLACKSTONE_BRICK_WALL)
             items.register(GILDED_BLACKSTONE)
-            items.register(POLISHED_BLACKSTONE_SLAB)
             items.register(POLISHED_BLACKSTONE_WALL)
         }
 
