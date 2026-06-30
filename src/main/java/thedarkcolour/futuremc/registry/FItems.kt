@@ -105,7 +105,7 @@ object FItems {
     val SPRUCE_TRAPDOOR = ModeledItemBlock(FBlocks.SPRUCE_TRAPDOOR)
     val DARK_OAK_TRAPDOOR = ModeledItemBlock(FBlocks.DARK_OAK_TRAPDOOR)
 
-    val NETHER_GOLD_ORE = ModeledItemBlock(FBlocks.NETHER_GOLD_ORE)
+    // 删除这一行：val NETHER_GOLD_ORE = ModeledItemBlock(FBlocks.NETHER_GOLD_ORE)
     val BLACKSTONE = ModeledItemBlock(FBlocks.BLACKSTONE)
     val BLACKSTONE_STAIRS = ModeledItemBlock(FBlocks.BLACKSTONE_STAIRS)
     val BLACKSTONE_WALL = ModeledItemBlock(FBlocks.BLACKSTONE_WALL)
@@ -145,7 +145,7 @@ object FItems {
         if (FutureMC.DEBUG) items.register(DEBUGGER)
 
         if (FutureMC.DEBUG) {
-            items.register(NETHER_GOLD_ORE)
+            // 删除这一行：items.register(NETHER_GOLD_ORE)
             items.register(BLACKSTONE)
             items.register(BLACKSTONE_STAIRS)
             items.register(BLACKSTONE_WALL)
