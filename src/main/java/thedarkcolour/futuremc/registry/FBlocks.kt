@@ -98,6 +98,33 @@ object FBlocks {
     val SPRUCE_WALL_SIGN = FSignBlock.Wall("spruce")
     val DARK_OAK_WALL_SIGN = FSignBlock.Wall("dark_oak")
 
+    val SOUL_FIRE_LANTERN = LanternBlock(Properties(Material.IRON, "soul_fire_lantern").hardnessAndResistance(3.5f).sound(FSounds.LANTERN).light(10).group(CreativeTabs.DECORATIONS))
+    val SOUL_FIRE_TORCH = BlockSoulFireTorch()
+    val SOUL_SOIL = FBlock(Properties(Material.GROUND, "soul_soil").group(CreativeTabs.BUILDING_BLOCKS).sound(FSounds.SOUL_SOIL))
+    val CHAIN = ChainBlock(Properties(Material.IRON, "chain").sound(FSounds.CHAIN).hardnessAndResistance(5.0f, 6.0f).shape(FBlock.cube(6.5, 0.0, 6.5, 9.5, 16.0, 9.5)).group(CreativeTabs.DECORATIONS))
+    val NETHERITE_BLOCK = FBlock(Properties(Material.IRON, "netherite_block").color(MapColor.BLACK).hardnessAndResistance(50.0f, 1200.0f).sound(FSounds.NETHERITE).group(CreativeTabs.BUILDING_BLOCKS).usableBeaconBase())
+    val ANCIENT_DEBRIS = FBlock(Properties(Material.IRON, "ancient_debris").color(MapColor.BLACK).hardnessAndResistance(30.0f, 1200.0f).sound(FSounds.ANCIENT_DEBRIS).group(CreativeTabs.BUILDING_BLOCKS))
+    // val WARPED_NYLIUM = NyliumBlock(Properties(Material.ROCK, "warped_nylium").color(MapColor.CYAN).hardnessAndResistance(1.0f).sound(FSounds.NYLIUM))
+    // val CRIMSON_NYLIUM = NyliumBlock(Properties(Material.ROCK, "crimson_nylium").color(MapColor.RED))
+    // val WARPED_WART_BLOCK = FBlock(Properties(Material.GRASS, "warped_wart_block").color(MapColor.CYAN))
+
+    // 删除这一行：val NETHER_GOLD_ORE = NetherGoldOreBlock(...)
+    val BLACKSTONE = FBlock(Properties(Material.ROCK, "blackstone").color(MapColor.BLACK).hardnessAndResistance(1.5f, 6.0f))
+    val BLACKSTONE_STAIRS = FStairsBlock(BLACKSTONE.defaultState, Properties(Material.ROCK, "blackstone_stairs").color(MapColor.BLACK).hardnessAndResistance(1.5f, 6.0f))
+    val BLACKSTONE_WALL = BlockWall(Properties(Material.ROCK, "blackstone_wall").color(MapColor.BLACK).hardnessAndResistance(1.5f, 6.0f))
+    val BLACKSTONE_SLAB = FSlabBlock(Properties(Material.ROCK, "blackstone_slab").color(MapColor.BLACK).hardnessAndResistance(2.0F, 6.0F))
+    val POLISHED_BLACKSTONE = FBlock(Properties(Material.ROCK, "polished_blackstone").color(MapColor.BLACK).hardnessAndResistance(2.0F, 6.0F))
+    val POLISHED_BLACKSTONE_BRICKS = FBlock(Properties(Material.ROCK, "polished_blackstone_bricks").color(MapColor.BLACK).hardnessAndResistance(1.5F, 6.0F))
+    val CRACKED_POLISHED_BLACKSTONE_BRICKS = FBlock(Properties(Material.ROCK, "cracked_polished_blackstone_bricks"))
+    val CHISELED_POLISHED_BLACKSTONE = FBlock(Properties(Material.ROCK, "chiseled_polished_blackstone").hardnessAndResistance(1.5F, 6.0F))
+    val POLISHED_BLACKSTONE_BRICK_SLAB = FSlabBlock(Properties(Material.ROCK, "polished_blackstone_brick_slab").hardnessAndResistance(2.0F, 6.0F))
+    val POLISHED_BLACKSTONE_BRICK_STAIRS = FStairsBlock(POLISHED_BLACKSTONE_BRICKS.defaultState, Properties(Material.ROCK, "polished_blackstone_brick_stairs").color(MapColor.BLACK).hardnessAndResistance(1.5F, 6.0F))
+    val POLISHED_BLACKSTONE_BRICK_WALL = BlockWall(Properties(Material.ROCK, "polished_blackstone_brick_wall").color(MapColor.BLACK).hardnessAndResistance(1.5F, 6.0F))
+    val GILDED_BLACKSTONE = FBlock(Properties(Material.ROCK, "gilded_blackstone").color(MapColor.BLACK).sound(FSounds.GILDED_BLACKSTONE))
+    val POLISHED_BLACKSTONE_STAIRS = FStairsBlock(POLISHED_BLACKSTONE.defaultState, Properties(Material.ROCK, "polished_blackstone_stairs").color(MapColor.BLACK).hardnessAndResistance(2.0F, 6.0F))
+    val POLISHED_BLACKSTONE_SLAB = FSlabBlock(Properties(Material.ROCK, "polished_blackstone_slab").color(MapColor.BLACK).hardnessAndResistance(1.5F, 6.0F))
+    val POLISHED_BLACKSTONE_WALL = BlockWall(Properties(Material.ROCK, "polished_blackstone_wall").color(MapColor.BLACK).hardnessAndResistance(2.0F, 6.0F))
+
     val SEAGRASS = BlockSeaGrass()
     val SEAGRASS_FLOWING = SEAGRASS.flowing
 
@@ -239,8 +266,37 @@ object FBlocks {
         if (FConfig.villageAndPillage.newTrapdoors.darkOak)
             blocks.register(DARK_OAK_TRAPDOOR)
 
+        if (FConfig.netherUpdate.soulFireLantern)
+            blocks.register(SOUL_FIRE_LANTERN)
+        if (FConfig.netherUpdate.soulFireTorch)
+            blocks.register(SOUL_FIRE_TORCH)
+        if (FConfig.netherUpdate.soulSoil)
+            blocks.register(SOUL_SOIL)
+        if (FConfig.netherUpdate.chain)
+            blocks.register(CHAIN)
+        if (FConfig.netherUpdate.netherite)
+            blocks.registerAll(NETHERITE_BLOCK, ANCIENT_DEBRIS)
         if (FutureMC.DEBUG)
             blocks.registerAll(SEAGRASS, SEAGRASS_FLOWING)
+
+        if (FutureMC.DEBUG) {
+            // 删除这一行：blocks.register(NETHER_GOLD_ORE)
+            blocks.register(BLACKSTONE)
+            blocks.register(BLACKSTONE_STAIRS)
+            blocks.register(BLACKSTONE_WALL)
+            blocks.register(BLACKSTONE_SLAB)
+            blocks.register(POLISHED_BLACKSTONE)
+            blocks.register(POLISHED_BLACKSTONE_BRICKS)
+            blocks.register(CRACKED_POLISHED_BLACKSTONE_BRICKS)
+            blocks.register(CHISELED_POLISHED_BLACKSTONE)
+            blocks.register(POLISHED_BLACKSTONE_BRICK_SLAB)
+            blocks.register(POLISHED_BLACKSTONE_BRICK_STAIRS)
+            blocks.register(POLISHED_BLACKSTONE_BRICK_WALL)
+            blocks.register(GILDED_BLACKSTONE)
+            blocks.register(POLISHED_BLACKSTONE_STAIRS)
+            blocks.register(POLISHED_BLACKSTONE_SLAB)
+            blocks.register(POLISHED_BLACKSTONE_WALL)
+        }
 
         val newSigns = FConfig.villageAndPillage.newSigns
 
