@@ -61,7 +61,6 @@ import thedarkcolour.futuremc.registry.FItems.HONEY_BOTTLE
 import thedarkcolour.futuremc.registry.FSounds
 import thedarkcolour.futuremc.registry.FSounds.HONEY_BOTTLE_DRINK
 import thedarkcolour.futuremc.registry.RegistryEventHandler
-import thedarkcolour.futuremc.world.FWorldListener
 import thedarkcolour.futuremc.world.OldWorldHandler
 import thedarkcolour.futuremc.world.gen.feature.AncientDebrisWorldGen
 import thedarkcolour.futuremc.world.gen.feature.BeeNestGenerator
@@ -292,15 +291,4 @@ object Events {
     }
 
     // Powder snow capability - removed (unused feature)
-
-    @SubscribeEvent
-    fun onWorldLoad(event: WorldEvent.Load) {
-        event.world.addEventListener(FWorldListener.INSTANCE)
-    }
-
-    // This might be unnecessary but better safe than sorry
-    @SubscribeEvent
-    fun onWorldUnload(event: WorldEvent.Unload) {
-        event.world.removeEventListener(FWorldListener.INSTANCE)
-    }
 }
