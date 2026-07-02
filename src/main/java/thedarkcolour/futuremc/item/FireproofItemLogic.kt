@@ -190,46 +190,12 @@ object FireproofItemLogic {
             entityBoundingBox = entityBoundingBox.offset(motionX, motionY, motionZ)
             resetPositionToBB()
         } else {
-            if (type == MoverType.PISTON) {
-                val i = world.totalWorldTime
+            // ========== 已删除：活塞专用逻辑 ==========
+            // EntityItem 永远不会被活塞推动（移动类型永远是 SELF）
+            // 原版的 if (type == MoverType.PISTON) 块已移除
+            // 相应 AT：pistonDeltas / pistonDeltasGameTime 也不再需要
+            // ========================================
 
-                if (i != pistonDeltasGameTime) {
-                    Arrays.fill(pistonDeltas, 0.0)
-                    pistonDeltasGameTime = i
-                }
-
-                if (x != 0.0) {
-                    val j = EnumFacing.Axis.X.ordinal
-                    val d0 =
-                        MathHelper.clamp(x + pistonDeltas[j], -0.51, 0.51)
-                    x = d0 - pistonDeltas[j]
-                    pistonDeltas[j] = d0
-                    if (abs(x) <= 9.999999747378752E-6) {
-                        return
-                    }
-                } else if (y != 0.0) {
-                    val l4 = EnumFacing.Axis.Y.ordinal
-                    val d12 =
-                        MathHelper.clamp(y + pistonDeltas[l4], -0.51, 0.51)
-                    y = d12 - pistonDeltas[l4]
-                    pistonDeltas[l4] = d12
-                    if (abs(y) <= 9.999999747378752E-6) {
-                        return
-                    }
-                } else {
-                    if (z == 0.0) {
-                        return
-                    }
-                    val i5 = EnumFacing.Axis.Z.ordinal
-                    val d13 =
-                        MathHelper.clamp(z + pistonDeltas[i5], -0.51, 0.51)
-                    z = d13 - pistonDeltas[i5]
-                    pistonDeltas[i5] = d13
-                    if (abs(z) <= 9.999999747378752E-6) {
-                        return
-                    }
-                }
-            }
             world.profiler.startSection("move")
 
             if (isInWeb) {
