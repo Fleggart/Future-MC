@@ -29,6 +29,12 @@ class ScaffoldingBlock(properties: Properties) : FBlock(properties) {
         return super.getBoundingBox(state, worldIn, pos)
     }
 
+    // ============================================================
+    // ✅ 修复：碰撞箱逻辑
+    // - 玩家在顶部（不潜行）：使用顶部边框碰撞箱（防止掉落）
+    // - 玩家在内部 + 不潜行：使用实心碰撞箱（挂在脚手架上）
+    // - 玩家在内部 + 潜行：使用空心碰撞箱（允许穿过中间下降）
+    // ============================================================
     override fun addCollisionBoxToList(
         state: IBlockState,
         worldIn: World,
@@ -38,21 +44,30 @@ class ScaffoldingBlock(properties: Properties) : FBlock(properties) {
         entityIn: Entity?,
         isActualState: Boolean
     ) {
-        if (entityIn != null) {
-            if (entityIn.posY > (pos.y + 1.0 - 1.0E-5) && !entityIn.isSneaking) {
+        if (entityIn !is EntityLivingBase) return
+
+        // 判断玩家是否在脚手架顶部（站在上面）
+        val isOnTop = entityIn.posY > (pos.y + 1.0 - 0.001) && !entityIn.isSneaking
+
+        // 玩家在顶部 → 只提供顶部边框碰撞（防止从边缘掉落）
+        if (isOnTop) {
+            for (box in noBottomCollisionBoxes) {
+                addCollisionBoxToList(pos, entityBox, collidingBoxes, box)
+            }
+            return
+        }
+
+        // 玩家在脚手架内部
+        if (entityIn.posY > (pos.y - 0.001)) {
+            // 潜行 → 使用空心碰撞箱（中间可穿过，实现下降）
+            if (entityIn.isSneaking) {
                 for (box in noBottomCollisionBoxes) {
                     addCollisionBoxToList(pos, entityBox, collidingBoxes, box)
                 }
-                // todo fix jump ups in scaffolding above the ground
-            } else if (entityIn.posY > (pos.y - 1.0E-5) && state.getValue(DISTANCE) != 0 && state.getValue(BOTTOM)) {
-                if (entityIn.motionY <= 0) {
-                    for (box in bottomCollisionBoxes) {
-                        addCollisionBoxToList(pos, entityBox, collidingBoxes, box)
-                    }
-                } else {
-                    //for (box in noBottomCollisionBoxes) {
-                    //    addCollisionBoxToList(pos, entityBox, collidingBoxes, box)
-                    //}
+            } else {
+                // 不潜行 → 使用实心碰撞箱（挂在脚手架上）
+                for (box in bottomCollisionBoxes) {
+                    addCollisionBoxToList(pos, entityBox, collidingBoxes, box)
                 }
             }
         }
@@ -61,6 +76,9 @@ class ScaffoldingBlock(properties: Properties) : FBlock(properties) {
     // ============================================================
     // ✅ 新增：玩家在脚手架内部的移动逻辑
     // 还原原版 1.14+ 的攀爬/下降行为
+    // - 按住跳跃键：持续上升（由 isLadder = true 配合跳跃实现）
+    // - 按住潜行键：持续下降（由 onEntityCollision 控制）
+    // - 不按任何键：停留在原地（由碰撞箱阻止下落）
     // ============================================================
     override fun onEntityCollision(
         worldIn: World,
@@ -71,7 +89,7 @@ class ScaffoldingBlock(properties: Properties) : FBlock(properties) {
         super.onEntityCollision(worldIn, pos, state, entityIn)
 
         if (entityIn is EntityLivingBase) {
-            // 检查玩家是否在脚手架内部（碰撞箱与方块重叠）
+            // 检查玩家是否在脚手架内部
             val box = entityIn.entityBoundingBox
             val minX = pos.x.toDouble()
             val minY = pos.y.toDouble()
@@ -90,7 +108,7 @@ class ScaffoldingBlock(properties: Properties) : FBlock(properties) {
                     entityIn.motionY < 0.0 -> {
                         entityIn.motionY = 0.0
                     }
-                    // 上升由跳跃键控制，不需要额外处理
+                    // 上升由跳跃键 + isLadder = true 控制，不需要额外处理
                 }
             }
         }
@@ -180,22 +198,33 @@ class ScaffoldingBlock(properties: Properties) : FBlock(properties) {
         private val DISTANCE: PropertyInteger = PropertyInteger.create("distance", 0, 7)
         private val BOTTOM: PropertyBool = PropertyBool.create("bottom")
 
+        /**
+         * 实心碰撞箱（底部 + 四角柱子）
+         * 用于玩家在脚手架内部但不潜行时，防止玩家掉落
+         */
         private var bottomCollisionBoxes = arrayOf(
-            cube(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
-            cube(0.0, 0.0, 0.0, 2.0, 2.0, 16.0),
-            cube(14.0, 0.0, 0.0, 16.0, 2.0, 16.0),
-            cube(0.0, 0.0, 14.0, 16.0, 2.0, 16.0),
-            cube(0.0, 0.0, 0.0, 16.0, 2.0, 2.0)
-        )
-        private var noBottomCollisionBoxes = arrayOf(
-            cube(0.0, 14.0, 0.0, 16.0, 16.0, 16.0),
-            cube(0.0, 0.0, 0.0, 2.0, 16.0, 2.0),
-            cube(14.0, 0.0, 0.0, 16.0, 16.0, 2.0),
-            cube(0.0, 0.0, 14.0, 2.0, 16.0, 16.0),
-            cube(14.0, 0.0, 14.0, 16.0, 16.0, 16.0)
+            cube(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),   // 底部
+            cube(0.0, 0.0, 0.0, 2.0, 2.0, 16.0),    // 左下角柱子
+            cube(14.0, 0.0, 0.0, 16.0, 2.0, 16.0),  // 右下角柱子
+            cube(0.0, 0.0, 14.0, 16.0, 2.0, 16.0),  // 左上角柱子
+            cube(0.0, 0.0, 0.0, 16.0, 2.0, 2.0)     // 右上角柱子
         )
 
-        // Number of blocks away from pos
+        /**
+         * 空心碰撞箱（顶部边框 + 四角柱子，中间空心）
+         * 用于玩家在脚手架顶部时防止掉落，或潜行时允许穿过中间下降
+         */
+        private var noBottomCollisionBoxes = arrayOf(
+            cube(0.0, 14.0, 0.0, 16.0, 16.0, 16.0), // 顶部边框
+            cube(0.0, 0.0, 0.0, 2.0, 16.0, 2.0),    // 左下角柱子
+            cube(14.0, 0.0, 0.0, 16.0, 16.0, 2.0),  // 右下角柱子
+            cube(0.0, 0.0, 14.0, 2.0, 16.0, 16.0),  // 左上角柱子
+            cube(14.0, 0.0, 14.0, 16.0, 16.0, 16.0) // 右上角柱子
+        )
+
+        /**
+         * 获取脚手架距离地面的水平距离（0-7）
+         */
         fun getHorizontalDistance(worldIn: World, pos: BlockPos): Int {
             val blockPos = MutableBlockPos(pos).move(EnumFacing.DOWN)
             val blockstate = worldIn.getBlockState(blockPos)
