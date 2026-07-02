@@ -107,16 +107,6 @@ object FBlocks {
     // val CRIMSON_NYLIUM = NyliumBlock(Properties(Material.ROCK, "crimson_nylium").color(MapColor.RED))
     // val WARPED_WART_BLOCK = FBlock(Properties(Material.GRASS, "warped_wart_block").color(MapColor.CYAN))
 
-    val BLACKSTONE = FBlock(Properties(Material.ROCK, "blackstone").color(MapColor.BLACK).hardnessAndResistance(1.5f, 6.0f))
-    val BLACKSTONE_WALL = BlockWall(Properties(Material.ROCK, "blackstone_wall").color(MapColor.BLACK).hardnessAndResistance(1.5f, 6.0f))
-    val POLISHED_BLACKSTONE = FBlock(Properties(Material.ROCK, "polished_blackstone").color(MapColor.BLACK).hardnessAndResistance(2.0F, 6.0F))
-    val POLISHED_BLACKSTONE_BRICKS = FBlock(Properties(Material.ROCK, "polished_blackstone_bricks").color(MapColor.BLACK).hardnessAndResistance(1.5F, 6.0F))
-    val CRACKED_POLISHED_BLACKSTONE_BRICKS = FBlock(Properties(Material.ROCK, "cracked_polished_blackstone_bricks"))
-    val CHISELED_POLISHED_BLACKSTONE = FBlock(Properties(Material.ROCK, "chiseled_polished_blackstone").hardnessAndResistance(1.5F, 6.0F))
-    val POLISHED_BLACKSTONE_BRICK_WALL = BlockWall(Properties(Material.ROCK, "polished_blackstone_brick_wall").color(MapColor.BLACK).hardnessAndResistance(1.5F, 6.0F))
-    val GILDED_BLACKSTONE = FBlock(Properties(Material.ROCK, "gilded_blackstone").color(MapColor.BLACK).sound(FSounds.GILDED_BLACKSTONE))
-    val POLISHED_BLACKSTONE_WALL = BlockWall(Properties(Material.ROCK, "polished_blackstone_wall").color(MapColor.BLACK).hardnessAndResistance(2.0F, 6.0F))
-
     val SCAFFOLDING = ScaffoldingBlock(Properties(Material.CIRCUITS, "scaffolding").hardnessAndResistance(0f, 0f).sound(FSounds.SCAFFOLDING).group(CreativeTabs.DECORATIONS))
     val BELL = BlockBell(Properties(Material.IRON, "bell").hardnessAndResistance(5.0f).sound(SoundType.ANVIL).group(CreativeTabs.DECORATIONS))
 
@@ -262,18 +252,6 @@ object FBlocks {
             blocks.register(CHAIN)
         if (FConfig.netherUpdate.netherite)
             blocks.registerAll(NETHERITE_BLOCK, ANCIENT_DEBRIS)
-
-        if (FutureMC.DEBUG) {
-            blocks.register(BLACKSTONE)
-            blocks.register(BLACKSTONE_WALL)
-            blocks.register(POLISHED_BLACKSTONE)
-            blocks.register(POLISHED_BLACKSTONE_BRICKS)
-            blocks.register(CRACKED_POLISHED_BLACKSTONE_BRICKS)
-            blocks.register(CHISELED_POLISHED_BLACKSTONE)
-            blocks.register(POLISHED_BLACKSTONE_BRICK_WALL)
-            blocks.register(GILDED_BLACKSTONE)
-            blocks.register(POLISHED_BLACKSTONE_WALL)
-        }
 
         val newSigns = FConfig.villageAndPillage.newSigns
 
