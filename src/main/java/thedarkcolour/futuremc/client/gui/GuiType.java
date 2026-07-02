@@ -27,8 +27,8 @@ public enum GuiType {
     GRINDSTONE(ContainerGrindstone::new),
     STONECUTTER(StonecutterContainer::new),
     LOOM(ContainerLoom::new),
-    SMITHING_TABLE(SmithingContainer::new),
-    CARTOGRAPHY_TABLE(ContainerCartographyTable::new);
+    SMITHING_TABLE(SmithingContainer::new);
+    // CARTOGRAPHY_TABLE(ContainerCartographyTable::new); // 已删除
 
     /**
      * The container factory of this {@link GuiType}
