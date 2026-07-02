@@ -252,27 +252,6 @@ object Events {
         }
     }
 
-    // iron golem healing
-    @SubscribeEvent
-    fun healIronGolem(event: PlayerInteractEvent.EntityInteract) {
-        if (FConfig.buzzyBees.ironGolem.ironBarHealing) {
-            val entity = event.target
-            if (entity is EntityIronGolem && event.itemStack.item == Items.IRON_INGOT) {
-                val hp = entity.health
-                entity.heal(25f)
-                // only heal if the entity HP was increased
-                if (hp != entity.health) {
-                    val rand = entity.rng
-                    val pitch = 1.0f + (rand.nextFloat() - rand.nextFloat()) * 0.2f
-                    entity.playSound(FSounds.IRON_GOLEM_REPAIR, 1.0f, pitch)
-                    if (!event.entityPlayer.isCreative) {
-                        event.itemStack.shrink(1)
-                    }
-                }
-            }
-        }
-    }
-
     @SubscribeEvent
     fun onContainerOpen(event: PlayerContainerEvent.Open) {
         if (FConfig.villageAndPillage.newVillagerGui) {
