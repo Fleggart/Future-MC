@@ -2,21 +2,14 @@ package thedarkcolour.futuremc.registry
 
 import net.minecraft.block.Block
 import net.minecraft.creativetab.CreativeTabs
-import net.minecraft.enchantment.Enchantment
-import net.minecraft.entity.EntityLiving
-import net.minecraft.entity.EntitySpawnPlacementRegistry
-import net.minecraft.entity.EnumCreatureType
 import net.minecraft.item.Item
 import net.minecraft.item.crafting.IRecipe
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.SoundEvent
-import net.minecraft.world.biome.Biome
 import net.minecraftforge.client.event.TextureStitchEvent
 import net.minecraftforge.event.RegistryEvent
-import net.minecraftforge.fml.common.eventhandler.EventPriority
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.registry.EntityEntry
-import net.minecraftforge.fml.common.registry.EntityRegistry
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import net.minecraftforge.registries.IForgeRegistryModifiable
@@ -25,23 +18,14 @@ import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.block.villagepillage.CampfireBlock
 import thedarkcolour.futuremc.client.particle.CampfireParticle
 import thedarkcolour.futuremc.client.particle.SoulFlameParticle
-import thedarkcolour.futuremc.compat.OE
 import thedarkcolour.futuremc.compat.checkBetterWithMods
-import thedarkcolour.futuremc.compat.isModLoaded
-import thedarkcolour.futuremc.config.FConfig.updateAquatic
 import thedarkcolour.futuremc.config.FConfig.useVanillaCreativeTabs
-// 移除鱼类实体导入
-// import thedarkcolour.futuremc.entity.fish.cod.EntityCod
-// import thedarkcolour.futuremc.entity.fish.pufferfish.EntityPufferfish
-// import thedarkcolour.futuremc.entity.fish.salmon.EntitySalmon
-// import thedarkcolour.futuremc.entity.fish.tropical.EntityTropicalFish
 import thedarkcolour.futuremc.item.ItemGroup
 
 object RegistryEventHandler {
     @SubscribeEvent
     fun onBlockRegistry(event: RegistryEvent.Register<Block>) {
         FutureMC.GROUP = if (useVanillaCreativeTabs) CreativeTabs.MISC else ItemGroup
-
 
         FBlocks.registerBlocks(event.registry)
 
@@ -51,54 +35,14 @@ object RegistryEventHandler {
     }
 
     @SubscribeEvent
-    fun onItemRegistry(event: RegistryEvent.Register<Item>) = FItems.registerItems(event.registry)
+    fun onItemRegistry(event: RegistryEvent.Register<Item>) {
+        FItems.registerItems(event.registry)
+    }
 
     @SubscribeEvent
     fun onEntityRegistry(event: RegistryEvent.Register<EntityEntry>) {
         FEntities.registerEntities()
         runOnClient { FEntities.registerEntityRenderers() }
-    }
-
-    // Enchantment registration removed
-
-    // 移除鱼类生物群系生成逻辑
-    @SubscribeEvent(priority = EventPriority.LOWEST)
-    fun onBiomeRegistryComplete(event: RegistryEvent.Register<Biome>) {
-        // 鱼生成逻辑已移除
-        /*
-        val fishConfig = updateAquatic.fish
-        val logMissing = fishConfig.logMissingValidBiomes
-        val classes = arrayOf(
-            EntityCod::class.java,
-            EntityPufferfish::class.java,
-            EntitySalmon::class.java,
-            EntityTropicalFish::class.java
-        ).iterator()
-        val fishArray = arrayOf(fishConfig.cod, fishConfig.pufferfish, fishConfig.salmon, fishConfig.tropicalFish)
-
-        for (fish in fishArray) {
-            val fishClass = classes.next()
-            if (fish.enabled) {
-                for (spawnEntry in fish.validBiomes) {
-                    val parts = spawnEntry.split(":")
-                    val loc = ResourceLocation(parts[0], parts[1])
-                    val biome = event.registry.getValue(loc)
-
-                    if (biome == null) {
-                        if (logMissing) {
-                            FutureMC.LOGGER.warn("Tried to add missing biome '$loc' to FutureMC fish spawns")
-                        }
-                        break
-                    } else {
-                        if (!isModLoaded(OE) || !updateAquatic.oceanicExpanse) {
-                            EntityRegistry.addSpawn(fishClass, Integer.parseInt(parts[2]), Integer.parseInt(parts[3]), Integer.parseInt(parts[4]), EnumCreatureType.WATER_CREATURE, biome)
-                            EntitySpawnPlacementRegistry.setPlacementType(fishClass, EntityLiving.SpawnPlacementType.IN_WATER)
-                        }
-                    }
-                }
-            }
-        }
-        */
     }
 
     @SubscribeEvent
@@ -130,8 +74,5 @@ object RegistryEventHandler {
         ).map { event.map.registerSprite(it) }.toTypedArray()
 
         SoulFlameParticle.texture = event.map.registerSprite(ResourceLocation(FutureMC.ID, "particles/soul_fire_flame"))
-
-        //event.map.registerSprite(ResourceLocation(FutureMC.ID, "blocks/water_still"))
-        //event.map.registerSprite(ResourceLocation(FutureMC.ID, "blocks/water_flow"))
     }
 }
