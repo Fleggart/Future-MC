@@ -9,7 +9,7 @@ import net.minecraft.util.math.BlockPos.MutableBlockPos
 import net.minecraft.world.World
 import net.minecraft.world.biome.BiomeDecorator
 import net.minecraft.world.gen.feature.WorldGenAbstractTree
-import sun.reflect.Reflection
+// 删除了: import sun.reflect.Reflection
 import thedarkcolour.core.util.getDoubleOrDefault
 import thedarkcolour.core.util.isAir
 import thedarkcolour.core.util.move
@@ -94,7 +94,7 @@ object BeeNestGenerator {
         if (cannotGenerate(worldIn, rand, position)) return
     }
 
-    // Skips reflection and flower checks because this is only called during w orldgen
+    // Skips reflection and flower checks because this is only called during worldgen
     fun fastCannotGenerate(worldIn: World, rand: Random, pos: BlockPos): Boolean {
         if (!buzzyBees.bee.enabled) {
             return true
@@ -106,11 +106,15 @@ object BeeNestGenerator {
         return false
     }
 
+    /**
+     * 修改后的 cannotGenerate 方法
+     * 移除了对 sun.reflect.Reflection 的依赖
+     * 现在完全使用 fastCannotGenerate 的逻辑
+     * 
+     * 影响：玩家手动种树时也会生成蜂巢（与 Minecraft 1.15+ 原版行为一致）
+     */
     fun cannotGenerate(worldIn: World, rand: Random, pos: BlockPos): Boolean {
-        // ensure this is called either during worldgen or when there are flowers nearby
-        if (Reflection.getCallerClass(4) != BiomeDecorator::class.java && hasNoFlowersNearby(worldIn, pos)) {
-            return true
-        }
+        // 直接使用 fastCannotGenerate，只检查生物群系和概率
         return fastCannotGenerate(worldIn, rand, pos)
     }
 
