@@ -61,7 +61,6 @@ import thedarkcolour.futuremc.registry.FItems.HONEY_BOTTLE
 import thedarkcolour.futuremc.registry.FSounds
 import thedarkcolour.futuremc.registry.FSounds.HONEY_BOTTLE_DRINK
 import thedarkcolour.futuremc.registry.RegistryEventHandler
-import thedarkcolour.futuremc.world.OldWorldHandler
 import thedarkcolour.futuremc.world.gen.feature.AncientDebrisWorldGen
 import thedarkcolour.futuremc.world.gen.feature.BeeNestGenerator
 import kotlin.math.max
@@ -76,7 +75,6 @@ object Events {
         checkDynamicTrees()?.addListeners()
 
         MinecraftForge.EVENT_BUS.register(RegistryEventHandler)
-        MinecraftForge.EVENT_BUS.register(OldWorldHandler)
 
         if (FutureMC.CLIENT) {
             MinecraftForge.EVENT_BUS.register(ClientEvents)
