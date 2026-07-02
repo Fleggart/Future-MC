@@ -290,7 +290,6 @@ object FBlocks {
         registerTE("futuremc:smoker", TileFurnaceAdvanced.TileSmoker::class.java, FConfig.villageAndPillage.smoker)
         registerTE("futuremc:composter", TileComposter::class.java, FConfig.villageAndPillage.composter)
         registerTE("futuremc:campfire", CampfireTile::class.java, FConfig.villageAndPillage.campfire.enabled)
-        registerTE("futuremc:sign", WoodenSignTile::class.java, newSigns.acacia || newSigns.birch || newSigns.darkOak || newSigns.jungle || newSigns.spruce)
     }
 
     fun noOceanicExpanse(): Boolean {
