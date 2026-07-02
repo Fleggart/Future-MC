@@ -21,7 +21,9 @@ import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import thedarkcolour.futuremc.client.ClientEvents
 import thedarkcolour.futuremc.config.FConfig
-import thedarkcolour.futuremc.network.NetworkHandler
+// 移除 GameModeSwitchPacket 和 NetworkHandler 导入
+// import thedarkcolour.futuremc.network.GameModeSwitchPacket
+// import thedarkcolour.futuremc.network.NetworkHandler
 import thedarkcolour.futuremc.registry.FBlocks
 import java.util.*
 
@@ -118,10 +120,11 @@ object ASMHooks {
         }
     }
 
-    @JvmStatic
-    fun setPrevGameType(interactionManager: PlayerInteractionManager) {
-        if (interactionManager.gameType != GameType.NOT_SET) {
-            NetworkHandler.sendSetPrevGameMode(interactionManager.player, interactionManager.gameType)
-        }
-    }
+    // setPrevGameType 方法已移除
+    // @JvmStatic
+    // fun setPrevGameType(interactionManager: PlayerInteractionManager) {
+    //     if (interactionManager.gameType != GameType.NOT_SET) {
+    //         NetworkHandler.sendSetPrevGameMode(interactionManager.player, interactionManager.gameType)
+    //     }
+    // }
 }
