@@ -163,7 +163,7 @@ public final class CoreTransformer implements IClassTransformer {
                     travelNode.instructions.insert(node, ASMUtil.createInsnList(
                             new JumpInsnNode(IFNE, l74),
                             new VarInsnNode(ALOAD, 0),
-                            new FieldInsnNode(GETFIELD, "net/minecraft/entity/entityliving/EntityLivingBase", isJumpingFieldName, "Z")
+                            new FieldInsnNode(GETFIELD, "net/minecraft/entity/EntityLivingBase", isJumpingFieldName, "Z")
                     ));
 
                     break;
