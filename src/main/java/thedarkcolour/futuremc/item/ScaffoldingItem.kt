@@ -1,12 +1,6 @@
-下面是合并后的单文件版本（两个类放在同一个 Kotlin 文件里，保留原逻辑与依赖）：
-
-package thedarkcolour.futuremc.block.villagepillage
+package thedarkcolour.futuremc.item
 
 import net.minecraft.block.Block
-import net.minecraft.block.material.Material
-import net.minecraft.block.state.IBlockState
-import net.minecraft.entity.Entity
-import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumActionResult
@@ -19,49 +13,11 @@ import thedarkcolour.core.item.ModeledItemBlock
 import thedarkcolour.futuremc.block.villagepillage.ScaffoldingBlock
 import thedarkcolour.futuremc.registry.FBlocks
 
-
-// ===============================
-// Scaffolding Block
-// ===============================
-class ScaffoldingBlock : Block(Material.WOOD) {
-
-    override fun onEntityCollision(
-        worldIn: World,
-        pos: BlockPos,
-        state: IBlockState,
-        entityIn: Entity
-    ) {
-        super.onEntityCollision(worldIn, pos, state, entityIn)
-
-        if (entityIn is EntityLivingBase) {
-
-            val box = entityIn.entityBoundingBox
-
-            val minX = pos.x.toDouble()
-            val minY = pos.y.toDouble()
-            val minZ = pos.z.toDouble()
-            val maxX = pos.x + 1.0
-            val maxY = pos.y + 1.0
-            val maxZ = pos.z + 1.0
-
-            if (box.intersects(minX, minY, minZ, maxX, maxY, maxZ)) {
-
-                if (entityIn.isSneaking) {
-                    entityIn.motionY = -0.08
-                } else if (entityIn.motionY < 0.0) {
-                    entityIn.motionY = 0.0
-                }
-            }
-        }
-    }
-}
-
-
-// ===============================
-// Scaffolding Item
-// ===============================
+/**
+ * 脚手架物品
+ * 改进：引入视角判断，免去原版频繁按潜行键向上搭建的繁琐操作。
+ */
 class ScaffoldingItem : ModeledItemBlock(FBlocks.SCAFFOLDING) {
-
     override fun onItemUse(
         player: EntityPlayer,
         worldIn: World,
@@ -72,36 +28,32 @@ class ScaffoldingItem : ModeledItemBlock(FBlocks.SCAFFOLDING) {
         hitY: Float,
         hitZ: Float
     ): EnumActionResult {
-
         var placementPos = pos
 
+        // 确定初始判定位置
         val clickedState = worldIn.getBlockState(placementPos)
-
-        if (!clickedState.block.isReplaceable(worldIn, placementPos)
-            && clickedState.block != this.block
-        ) {
+        if (!clickedState.block.isReplaceable(worldIn, placementPos) && clickedState.block != this.block) {
             placementPos = placementPos.offset(facing)
         } else {
-
-            if (clickedState.block != this.block
-                && ScaffoldingBlock.getHorizontalDistance(worldIn, placementPos) == 7
-            ) {
+            if (clickedState.block != this.block && ScaffoldingBlock.getHorizontalDistance(worldIn, placementPos) == 7) {
                 return EnumActionResult.FAIL
             }
 
+            // 根据玩家视角或按键决定延伸方向
             val direction = when {
+                // 视角偏高/偏低时：向上搭建
                 player.rotationPitch > 60f || player.rotationPitch < -60f -> EnumFacing.UP
-                player.isSneaking -> player.horizontalFacing
+                // 水平或潜行时：朝玩家面对的方向水平延伸
                 else -> player.horizontalFacing
             }
 
+            // 沿选定方向寻找最近的可替换方块（最多延伸7格）
             var i = 0
             val cursor = BlockPos.MutableBlockPos(placementPos).move(direction)
             var found = false
 
             while (i < 7) {
                 val state = worldIn.getBlockState(cursor)
-
                 if (state.block != this.block) {
                     if (state.block.isReplaceable(worldIn, cursor)) {
                         placementPos = cursor
@@ -111,50 +63,33 @@ class ScaffoldingItem : ModeledItemBlock(FBlocks.SCAFFOLDING) {
                 }
 
                 cursor.move(direction)
-
-                if (direction.axis.isHorizontal) {
-                    i++
-                }
+                if (direction.axis.isHorizontal) i++
             }
 
             if (!found) return EnumActionResult.FAIL
         }
 
+        // 执行方块放置与音效播放
         val stack = player.getHeldItem(hand)
-
         if (!stack.isEmpty && player.canPlayerEdit(placementPos, facing, stack)) {
-
             val meta = this.getMetadata(stack.metadata)
-
             val state = this.block.getStateForPlacement(
-                worldIn,
-                placementPos,
-                facing,
-                hitX,
-                hitY,
-                hitZ,
-                meta,
-                player,
-                hand
+                worldIn, placementPos, facing, hitX, hitY, hitZ, meta, player, hand
             )
 
             if (placeBlockAt(stack, player, worldIn, placementPos, facing, hitX, hitY, hitZ, state)) {
-
                 val placedState = worldIn.getBlockState(placementPos)
                 val soundType = placedState.block.getSoundType(placedState, worldIn, placementPos, player)
-
                 worldIn.playSound(
                     player,
                     placementPos,
                     soundType.placeSound,
                     SoundCategory.BLOCKS,
-                    (soundType.volume + 1.0f) / 2.0f,
-                    soundType.pitch * 0.8f
+                    (soundType.getVolume() + 1.0f) / 2.0f,
+                    soundType.getPitch() * 0.8f
                 )
-
                 stack.shrink(1)
             }
-
             return EnumActionResult.SUCCESS
         }
 
@@ -167,7 +102,23 @@ class ScaffoldingItem : ModeledItemBlock(FBlocks.SCAFFOLDING) {
         side: EnumFacing,
         player: EntityPlayer,
         stack: ItemStack
+    ): Boolean = true
+
+    private fun canPlaceIgnoreBlockCheck(
+        level: World,
+        blockIn: Block,
+        pos: BlockPos,
+        skipCollisionCheck: Boolean,
+        sidePlacedOn: EnumFacing,
+        placer: EntityPlayer?
     ): Boolean {
-        return true
+        val state = level.getBlockState(pos)
+        val bounds = if (skipCollisionCheck) null else this.block.defaultState.getCollisionBoundingBox(level, pos)
+
+        if (bounds != null && !level.checkNoEntityCollision(bounds.offset(pos), placer)) {
+            return false
+        }
+
+        return state.block.isReplaceable(level, pos)
     }
 }
