@@ -24,17 +24,11 @@ class ScaffoldingBlock(properties: Properties) : FBlock(properties) {
         return BlockStateContainer(this, DISTANCE, BOTTOM)
     }
 
+    // todo getShape
     override fun getBoundingBox(state: IBlockState, worldIn: IBlockAccess, pos: BlockPos): AxisAlignedBB {
         return super.getBoundingBox(state, worldIn, pos)
     }
 
-    // ============================================================
-    // ✅ 修复：碰撞箱逻辑
-    // - 玩家正在上升（跳跃）→ 空心碰撞箱（不阻挡上升）
-    // - 玩家在顶部（不潜行）→ 顶部边框碰撞箱（防止掉落）
-    // - 玩家在内部 + 不潜行 → 实心碰撞箱（挂在脚手架上）
-    // - 玩家在内部 + 潜行 → 空心碰撞箱（允许穿过中间下降）
-    // ============================================================
     override fun addCollisionBoxToList(
         state: IBlockState,
         worldIn: World,
@@ -44,77 +38,21 @@ class ScaffoldingBlock(properties: Properties) : FBlock(properties) {
         entityIn: Entity?,
         isActualState: Boolean
     ) {
-        if (entityIn !is EntityLivingBase) return
-
-        // ✅ 玩家正在上升（跳跃）→ 使用空心碰撞箱，不阻挡上升
-        if (entityIn.motionY > 0.0) {
-            for (box in noBottomCollisionBoxes) {
-                addCollisionBoxToList(pos, entityBox, collidingBoxes, box)
-            }
-            return
-        }
-
-        // 判断玩家是否在脚手架顶部（站在上面）
-        val isOnTop = entityIn.posY > (pos.y + 1.0 - 0.001) && !entityIn.isSneaking
-
-        // 玩家在顶部 → 只提供顶部边框碰撞（防止从边缘掉落）
-        if (isOnTop) {
-            for (box in noBottomCollisionBoxes) {
-                addCollisionBoxToList(pos, entityBox, collidingBoxes, box)
-            }
-            return
-        }
-
-        // 玩家在脚手架内部
-        if (entityIn.posY > (pos.y - 0.001)) {
-            // 潜行 → 使用空心碰撞箱（中间可穿过，实现下降）
-            if (entityIn.isSneaking) {
+        if (entityIn != null) {
+            if (entityIn.posY > (pos.y + 1.0 - 1.0E-5) && !entityIn.isSneaking) {
                 for (box in noBottomCollisionBoxes) {
                     addCollisionBoxToList(pos, entityBox, collidingBoxes, box)
                 }
-            } else {
-                // 不潜行 → 使用实心碰撞箱（挂在脚手架上）
-                for (box in bottomCollisionBoxes) {
-                    addCollisionBoxToList(pos, entityBox, collidingBoxes, box)
-                }
-            }
-        }
-    }
-
-    // ============================================================
-    // ✅ 玩家在脚手架内部的移动逻辑
-    // - 按住跳跃键：持续上升（由 isLadder = true 配合跳跃实现）
-    // - 按住潜行键：持续下降（由 onEntityCollision 控制）
-    // - 不按任何键：停留在原地（由碰撞箱阻止下落）
-    // ============================================================
-    override fun onEntityCollision(
-        worldIn: World,
-        pos: BlockPos,
-        state: IBlockState,
-        entityIn: Entity
-    ) {
-        super.onEntityCollision(worldIn, pos, state, entityIn)
-
-        if (entityIn is EntityLivingBase) {
-            val box = entityIn.entityBoundingBox
-            val minX = pos.x.toDouble()
-            val minY = pos.y.toDouble()
-            val minZ = pos.z.toDouble()
-            val maxX = pos.x + 1.0
-            val maxY = pos.y + 1.0
-            val maxZ = pos.z + 1.0
-
-            if (box.intersects(minX, minY, minZ, maxX, maxY, maxZ)) {
-                when {
-                    // 按住潜行 → 持续下降
-                    entityIn.isSneaking -> {
-                        entityIn.motionY = -0.08
+                // todo fix jump ups in scaffolding above the ground
+            } else if (entityIn.posY > (pos.y - 1.0E-5) && state.getValue(DISTANCE) != 0 && state.getValue(BOTTOM)) {
+                if (entityIn.motionY <= 0) {
+                    for (box in bottomCollisionBoxes) {
+                        addCollisionBoxToList(pos, entityBox, collidingBoxes, box)
                     }
-                    // 不按潜行且正在下落 → 停留在原地（挂在脚手架上）
-                    entityIn.motionY < 0.0 -> {
-                        entityIn.motionY = 0.0
-                    }
-                    // 上升由跳跃键 + isLadder = true 控制
+                } else {
+                    //for (box in noBottomCollisionBoxes) {
+                    //    addCollisionBoxToList(pos, entityBox, collidingBoxes, box)
+                    //}
                 }
             }
         }
@@ -175,7 +113,7 @@ class ScaffoldingBlock(properties: Properties) : FBlock(properties) {
     }
 
     override fun isLadder(state: IBlockState, world: IBlockAccess, pos: BlockPos, entity: EntityLivingBase): Boolean {
-        return true  // 允许玩家攀爬（跳跃上升）
+        return true
     }
 
     override fun getStateFromMeta(meta: Int): IBlockState {
@@ -219,6 +157,7 @@ class ScaffoldingBlock(properties: Properties) : FBlock(properties) {
             cube(14.0, 0.0, 14.0, 16.0, 16.0, 16.0)
         )
 
+        // Number of blocks away from pos
         fun getHorizontalDistance(worldIn: World, pos: BlockPos): Int {
             val blockPos = MutableBlockPos(pos).move(EnumFacing.DOWN)
             val blockstate = worldIn.getBlockState(blockPos)
