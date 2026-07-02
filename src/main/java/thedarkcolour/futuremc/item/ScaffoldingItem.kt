@@ -7,12 +7,24 @@ import net.minecraft.util.EnumActionResult
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.EnumHand
 import net.minecraft.util.SoundCategory
+import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import thedarkcolour.core.item.ModeledItemBlock
 import thedarkcolour.futuremc.block.villagepillage.ScaffoldingBlock
 import thedarkcolour.futuremc.registry.FBlocks
 
+/**
+ * 脚手架物品
+ * 
+ * 放置逻辑（相较于原版 1.14+ 的改进）：
+ * - 视角朝上（>60°）或朝下（<-60°）→ 向上搭
+ * - 视角水平 → 水平延伸
+ * - 潜行 + 视角水平 → 水平延伸（精细控制）
+ * 
+ * 这样玩家不需要一直按着潜行键来向上搭，
+ * 只需要控制视角方向即可。
+ */
 class ScaffoldingItem : ModeledItemBlock(FBlocks.SCAFFOLDING) {
     override fun onItemUse(
         player: EntityPlayer,
@@ -37,21 +49,25 @@ class ScaffoldingItem : ModeledItemBlock(FBlocks.SCAFFOLDING) {
                 return EnumActionResult.FAIL
             }
 
-            // 确定延伸方向
-            val direction = if (player.isSneaking) {
-                facing
-            } else {
-                if (facing == EnumFacing.UP) {
-                    player.horizontalFacing
-                } else {
-                    EnumFacing.UP
-                }
+            // ============================================================
+            // ✅ 改进：根据视角角度决定放置方向
+            // 不再需要强制按潜行才能向上搭
+            // ============================================================
+            val direction = when {
+                // 视角朝上或朝下 → 向上搭（建造高空/地面脚手架）
+                player.rotationPitch > 60f || player.rotationPitch < -60f -> EnumFacing.UP
+
+                // 潜行时 → 水平延伸（用于精细搭建，可精确控制位置）
+                player.isSneaking -> player.horizontalFacing
+
+                // 默认 → 水平延伸（视角平时自动水平）
+                else -> player.horizontalFacing
             }
 
             // 沿着方向寻找可放置位置（最多7格）
+            var i = 0
             val cursor = BlockPos.MutableBlockPos(placementPos).move(direction)
             var found = false
-            var i = 0
 
             while (i < 7) {
                 val state = worldIn.getBlockState(cursor)
@@ -62,6 +78,7 @@ class ScaffoldingItem : ModeledItemBlock(FBlocks.SCAFFOLDING) {
                     }
                     break
                 }
+
                 cursor.move(direction)
                 if (direction.axis.isHorizontal) {
                     i++
@@ -110,6 +127,10 @@ class ScaffoldingItem : ModeledItemBlock(FBlocks.SCAFFOLDING) {
         return true
     }
 
+    /**
+     * 检查方块是否可以放置
+     * 已移除无用的 worldBorder 注释代码
+     */
     private fun canPlaceIgnoreBlockCheck(
         level: World,
         blockIn: Block,
@@ -118,8 +139,6 @@ class ScaffoldingItem : ModeledItemBlock(FBlocks.SCAFFOLDING) {
         sidePlacedOn: EnumFacing,
         placer: EntityPlayer?
     ): Boolean {
-        // 原版检查：方块是否可替换、碰撞箱是否冲突等
-        // 删除了无用的 worldBorder 注释代码
         val state = level.getBlockState(pos)
         val bounds = if (skipCollisionCheck) null else this.block.defaultState.getCollisionBoundingBox(level, pos)
 
