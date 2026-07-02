@@ -58,6 +58,44 @@ class ScaffoldingBlock(properties: Properties) : FBlock(properties) {
         }
     }
 
+    // ============================================================
+    // ✅ 新增：玩家在脚手架内部的移动逻辑
+    // 还原原版 1.14+ 的攀爬/下降行为
+    // ============================================================
+    override fun onEntityCollision(
+        worldIn: World,
+        pos: BlockPos,
+        state: IBlockState,
+        entityIn: Entity
+    ) {
+        super.onEntityCollision(worldIn, pos, state, entityIn)
+
+        if (entityIn is EntityLivingBase) {
+            // 检查玩家是否在脚手架内部（碰撞箱与方块重叠）
+            val box = entityIn.entityBoundingBox
+            val minX = pos.x.toDouble()
+            val minY = pos.y.toDouble()
+            val minZ = pos.z.toDouble()
+            val maxX = pos.x + 1.0
+            val maxY = pos.y + 1.0
+            val maxZ = pos.z + 1.0
+
+            if (box.intersects(minX, minY, minZ, maxX, maxY, maxZ)) {
+                when {
+                    // 按住潜行 → 持续下降
+                    entityIn.isSneaking -> {
+                        entityIn.motionY = -0.08  // 原版下降速度
+                    }
+                    // 不按潜行且正在下落 → 停留在原地（挂在脚手架上）
+                    entityIn.motionY < 0.0 -> {
+                        entityIn.motionY = 0.0
+                    }
+                    // 上升由跳跃键控制，不需要额外处理
+                }
+            }
+        }
+    }
+
     override fun getRenderLayer(): BlockRenderLayer {
         return BlockRenderLayer.CUTOUT
     }
