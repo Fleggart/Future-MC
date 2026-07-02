@@ -13,7 +13,11 @@ import thedarkcolour.core.item.ModeledItem
 import thedarkcolour.core.item.ModeledItemBlock
 import thedarkcolour.core.util.setItemModel
 import thedarkcolour.core.util.setItemName
+import java.util.UUID
 
+/**
+ * 防火物品块 - 掉入岩浆或火中时不会被烧毁
+ */
 class FireproofItemBlock(block: Block) : ModeledItemBlock(block) {
     override fun onEntityItemUpdate(entity: EntityItem): Boolean {
         FireproofItemLogic.update(entity)
@@ -21,6 +25,9 @@ class FireproofItemBlock(block: Block) : ModeledItemBlock(block) {
     }
 }
 
+/**
+ * 防火物品 - 掉入岩浆或火中时不会被烧毁
+ */
 class FireproofItem(regName: String) : ModeledItem(regName) {
     override fun onEntityItemUpdate(entity: EntityItem): Boolean {
         FireproofItemLogic.update(entity)
@@ -28,6 +35,9 @@ class FireproofItem(regName: String) : ModeledItem(regName) {
     }
 }
 
+/**
+ * 防火斧头
+ */
 class FireproofAxeItem(
     regName: String,
     material: ToolMaterial,
@@ -45,6 +55,9 @@ class FireproofAxeItem(
     }
 }
 
+/**
+ * 防火锄头
+ */
 class FireproofHoeItem(regName: String, material: ToolMaterial) : ItemHoe(material) {
     init {
         setItemName(this, regName)
@@ -57,6 +70,9 @@ class FireproofHoeItem(regName: String, material: ToolMaterial) : ItemHoe(materi
     }
 }
 
+/**
+ * 防火镐
+ */
 class FireproofPickaxeItem(regName: String, material: ToolMaterial) : ItemPickaxe(material) {
     init {
         setItemName(this, regName)
@@ -69,6 +85,9 @@ class FireproofPickaxeItem(regName: String, material: ToolMaterial) : ItemPickax
     }
 }
 
+/**
+ * 防火锹
+ */
 class FireproofShovelItem(regName: String, material: ToolMaterial) : ItemSpade(material) {
     init {
         setItemName(this, regName)
@@ -81,6 +100,9 @@ class FireproofShovelItem(regName: String, material: ToolMaterial) : ItemSpade(m
     }
 }
 
+/**
+ * 防火剑
+ */
 class FireproofSwordItem(regName: String, material: ToolMaterial) : ItemSword(material) {
     init {
         setItemName(this, regName)
@@ -94,27 +116,26 @@ class FireproofSwordItem(regName: String, material: ToolMaterial) : ItemSword(ma
 }
 
 /**
- *
+ * 下界合金盔甲
+ * 
+ * 相较于普通盔甲，下界合金盔甲额外提供：
+ * - 击退抗性 +0.1（每件）
+ * - 防火（物品形态掉入岩浆不会被烧毁）
  */
-@Deprecated(level = DeprecationLevel.WARNING, message = "This is only here for MIA compat")
-class FireproofArmorItem(regName: String, materialIn: ArmorMaterial, equipmentSlotIn: EntityEquipmentSlot) : NetheriteArmorItem(regName, materialIn, equipmentSlotIn) {
-    override fun getItemAttributeModifiers(slot: EntityEquipmentSlot): Multimap<String, AttributeModifier> {
-        val map = HashMultimap.create<String, AttributeModifier>()
-
-        if (equipmentSlot == armorType) {
-            map.put(SharedMonsterAttributes.ARMOR.name, AttributeModifier(ARMOR_MODIFIERS[equipmentSlot.index], "Armor modifier", damageReduceAmount.toDouble(), 0))
-            map.put(SharedMonsterAttributes.ARMOR_TOUGHNESS.name, AttributeModifier(ARMOR_MODIFIERS[equipmentSlot.index], "Armor toughness", toughness.toDouble(), 0))
-        }
-
-        return map
-    }
-}
-
 open class NetheriteArmorItem(
     regName: String,
     materialIn: ArmorMaterial,
     equipmentSlotIn: EntityEquipmentSlot
 ) : ItemArmor(materialIn, 0, equipmentSlotIn) {
+
+    companion object {
+        /**
+         * 专门用于下界合金盔甲击退抗性的唯一标识符
+         * 注意：这个 UUID 不能与任何其他修饰符重复
+         */
+        private val KNOCKBACK_RESISTANCE_UUID = UUID.fromString("d5c8e8e0-9e3a-4b5f-9e8a-1b2c3d4e5f6a")
+    }
+
     init {
         setItemName(this, regName)
         setItemModel(this, 0)
@@ -124,7 +145,17 @@ open class NetheriteArmorItem(
         val map = super.getItemAttributeModifiers(slot)
 
         if (slot == armorType) {
-            map.put(SharedMonsterAttributes.KNOCKBACK_RESISTANCE.name, AttributeModifier(ARMOR_MODIFIERS[slot.index], "Armor knockback resistance", 0.1, 0))
+            // ✅ 使用独立的 UUID，不再复用 ARMOR_MODIFIERS 的 UUID
+            // 这样不会与护甲值、韧性等属性产生冲突
+            map.put(
+                SharedMonsterAttributes.KNOCKBACK_RESISTANCE.name,
+                AttributeModifier(
+                    KNOCKBACK_RESISTANCE_UUID,  // 独立的 UUID
+                    "Netherite armor knockback resistance",
+                    0.1,  // 每件提供 0.1 击退抗性（全套 0.4）
+                    0     // 0 = 直接加成
+                )
+            )
         }
 
         return map
