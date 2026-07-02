@@ -21,7 +21,6 @@ import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import thedarkcolour.futuremc.client.ClientEvents
 import thedarkcolour.futuremc.config.FConfig
-import thedarkcolour.futuremc.network.GameModeSwitchPacket
 import thedarkcolour.futuremc.network.NetworkHandler
 import thedarkcolour.futuremc.registry.FBlocks
 import java.util.*
