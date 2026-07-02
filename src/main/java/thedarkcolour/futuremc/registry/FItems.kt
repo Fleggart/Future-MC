@@ -103,16 +103,6 @@ object FItems {
     val SPRUCE_TRAPDOOR = ModeledItemBlock(FBlocks.SPRUCE_TRAPDOOR)
     val DARK_OAK_TRAPDOOR = ModeledItemBlock(FBlocks.DARK_OAK_TRAPDOOR)
 
-    val BLACKSTONE = ModeledItemBlock(FBlocks.BLACKSTONE)
-    val BLACKSTONE_WALL = ModeledItemBlock(FBlocks.BLACKSTONE_WALL)
-    val POLISHED_BLACKSTONE = ModeledItemBlock(FBlocks.POLISHED_BLACKSTONE)
-    val POLISHED_BLACKSTONE_BRICKS = ModeledItemBlock(FBlocks.POLISHED_BLACKSTONE_BRICKS)
-    val CRACKED_POLISHED_BLACKSTONE_BRICKS = ModeledItemBlock(FBlocks.CRACKED_POLISHED_BLACKSTONE_BRICKS)
-    val CHISELED_POLISHED_BLACKSTONE = ModeledItemBlock(FBlocks.CHISELED_POLISHED_BLACKSTONE)
-    val POLISHED_BLACKSTONE_BRICK_WALL = ModeledItemBlock(FBlocks.POLISHED_BLACKSTONE_BRICK_WALL)
-    val GILDED_BLACKSTONE = ModeledItemBlock(FBlocks.GILDED_BLACKSTONE)
-    val POLISHED_BLACKSTONE_WALL = ModeledItemBlock(FBlocks.POLISHED_BLACKSTONE_WALL)
-
     val SOUL_FIRE_LANTERN = ModeledItemBlock(FBlocks.SOUL_FIRE_LANTERN)
     val SOUL_FIRE_TORCH = ModeledItemBlock(FBlocks.SOUL_FIRE_TORCH)
     val SOUL_SOIL = ModeledItemBlock(FBlocks.SOUL_SOIL)
@@ -132,18 +122,6 @@ object FItems {
         if (FConfig.villageAndPillage.bamboo.enabled) items.register(BAMBOO)
 
         if (FutureMC.DEBUG) items.register(DEBUGGER)
-
-        if (FutureMC.DEBUG) {
-            items.register(BLACKSTONE)
-            items.register(BLACKSTONE_WALL)
-            items.register(POLISHED_BLACKSTONE)
-            items.register(POLISHED_BLACKSTONE_BRICKS)
-            items.register(CRACKED_POLISHED_BLACKSTONE_BRICKS)
-            items.register(CHISELED_POLISHED_BLACKSTONE)
-            items.register(POLISHED_BLACKSTONE_BRICK_WALL)
-            items.register(GILDED_BLACKSTONE)
-            items.register(POLISHED_BLACKSTONE_WALL)
-        }
 
         if (FConfig.villageAndPillage.lantern) items.register(LANTERN)
         if (FConfig.villageAndPillage.stonecutter.enabled) items.register(STONECUTTER)
