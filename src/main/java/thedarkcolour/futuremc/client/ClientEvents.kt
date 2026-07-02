@@ -1,5 +1,6 @@
 package thedarkcolour.futuremc.client
 
+
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiMerchant
 import net.minecraft.client.renderer.block.model.ModelResourceLocation
@@ -10,6 +11,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import thedarkcolour.futuremc.client.gui.GuiVillager
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.container.ContainerVillager
+import net.minecraftforge.client.model.ModelLoader
 
 object ClientEvents {
     val models = ArrayList<Triple<Item, Int, String>>()
