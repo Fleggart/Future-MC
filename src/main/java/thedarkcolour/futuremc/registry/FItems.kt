@@ -20,7 +20,6 @@ import thedarkcolour.futuremc.item.*
 object FItems {
     val DEBUGGER = DebuggerItem()
 
-    val NAUTILUS_SHELL = ModeledItem("nautilus_shell").setItemGroup(CreativeTabs.MISC)
     val SCUTE = ModeledItem("scute").setItemGroup(CreativeTabs.MATERIALS)
 
     val DYES = ItemDye()
@@ -131,8 +130,6 @@ object FItems {
         if (FConfig.buzzyBees.bee.enabled) items.register(HONEY_BOTTLE)
         if (FConfig.villageAndPillage.sweetBerryBush.enabled) items.register(SWEET_BERRIES)
         if (FConfig.villageAndPillage.bamboo.enabled) items.register(BAMBOO)
-        
-        if (FConfig.updateAquatic.nautilusShell) items.register(NAUTILUS_SHELL)
 
         if (FutureMC.DEBUG) items.register(DEBUGGER)
 
