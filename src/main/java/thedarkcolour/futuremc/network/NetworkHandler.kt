@@ -1,7 +1,5 @@
 package thedarkcolour.futuremc.network
 
-import net.minecraft.entity.player.EntityPlayerMP
-import net.minecraft.world.GameType
 import net.minecraftforge.fml.common.network.NetworkRegistry
 import net.minecraftforge.fml.relauncher.Side
 import thedarkcolour.futuremc.FutureMC
@@ -11,16 +9,15 @@ object NetworkHandler {
 
     fun registerPackets() {
         INSTANCE.registerMessage(VillagerPacketHandler::class.java, VillagerTradePacket::class.java, 0, Side.SERVER)
-        INSTANCE.registerMessage(SetPrevGameModePacket.Handler::class.java, SetPrevGameModePacket::class.java, 2, Side.CLIENT)
+        // GameModeSwitchPacket 和 SetPrevGameModePacket 已移除
+        // INSTANCE.registerMessage(GameModeSwitchPacket.Handler::class.java, GameModeSwitchPacket::class.java, 1, Side.SERVER)
+        // INSTANCE.registerMessage(SetPrevGameModePacket.Handler::class.java, SetPrevGameModePacket::class.java, 2, Side.CLIENT)
     }
 
     fun sendVillagerPacket(tradeIndex: Int) {
         INSTANCE.sendToServer(VillagerTradePacket(tradeIndex))
     }
 
-    fun sendSetPrevGameMode(player: EntityPlayerMP, gameType: GameType) {
-        if (player.connection != null) {
-            INSTANCE.sendTo(SetPrevGameModePacket(gameType), player)
-        }
-    }
+    // sendGameModeSwitch 已移除
+    // sendSetPrevGameMode 已移除
 }
