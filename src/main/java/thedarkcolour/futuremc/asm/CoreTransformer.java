@@ -28,10 +28,7 @@ public final class CoreTransformer implements IClassTransformer {
                     return ASMUtil.patch(basicClass, CoreTransformer::patchWorldGenBigTree);
 
                 case "net.minecraft.entity.EntityLivingBase":
-                    return ASMUtil.patch(basicClass, CoreTransformer::patchEntityLivingBase, ClassWriter.COMPUTE_MAXS); // my frames are correct thanks
-
-                //case "net.minecraft.entity.player.EntityPlayer":
-                //    return ASMUtil.patch(basicClass, CoreTransformer::patchEntityPlayer, ClassWriter.COMPUTE_MAXS);
+                    return ASMUtil.patch(basicClass, CoreTransformer::patchEntityLivingBase, ClassWriter.COMPUTE_MAXS);
 
                 case "net.minecraft.item.Item":
                     return ASMUtil.patch(basicClass, CoreTransformer::patchItem);
@@ -39,19 +36,9 @@ public final class CoreTransformer implements IClassTransformer {
                 case "net.minecraft.entity.monster.EntitySnowman":
                     return ASMUtil.patch(basicClass, CoreTransformer::patchEntitySnowman);
 
-                case "net.minecraft.server.management.PlayerInteractionManager":
-                    return ASMUtil.patch(basicClass, CoreTransformer::patchPlayerInteractionManager, ClassWriter.COMPUTE_MAXS);
-                //case "net.minecraft.client.entity.EntityPlayerSP":
-                //    return patchEntityPlayerSP(basicClass);
-                //case "net.minecraft.client.network.NetHandlerPlayClient":
-                //    return patchNetHandlerPlayClient(basicClass);
-
-                // 三叉戟功能已移除，不再注入 ModelBiped
-                // case "net.minecraft.client.model.ModelBiped":
-                //     return ASMUtil.patch(basicClass, CoreTransformer::patchModelBiped);
-
-                //case "net.minecraft.client.renderer.RenderItem":
-                //    return ASMUtil.patchRenderItem(basicClass);
+                // 游戏模式切换功能已移除，不再注入 PlayerInteractionManager
+                // case "net.minecraft.server.management.PlayerInteractionManager":
+                //     return ASMUtil.patch(basicClass, CoreTransformer::patchPlayerInteractionManager, ClassWriter.COMPUTE_MAXS);
 
                 case "com.fuzs.gamblingstyle.handler.OpenContainerHandler":
                     return ASMUtil.patch(basicClass, CoreTransformer::transformOpenContainerHandler);
@@ -113,14 +100,16 @@ public final class CoreTransformer implements IClassTransformer {
         instructions.insertBefore(iload0, new FrameNode(F_SAME, 0, null, 0, null));
     }
 
+    // patchPlayerInteractionManager 已移除 - 游戏模式切换功能已删除
+    /*
     private static void patchPlayerInteractionManager(ClassNode classNode) {
         MethodNode setGameType = ASMUtil.findMethod(classNode, "func_73076_a", "setGameType", null);
-        // Patch at head of method
         ASMUtil.patchBeforeInsn(setGameType, ASMUtil.createInsnList(
                 new VarInsnNode(ALOAD, 0),
                 new MethodInsnNode(INVOKESTATIC, "thedarkcolour/futuremc/asm/ASMHooks", "setPrevGameType", "(Lnet/minecraft/server/management/PlayerInteractionManager;)V", false)
         ), 1, node -> node.getOpcode() == ALOAD);
     }
+    */
 
     private static void patchItem(ClassNode classNode) {
         MethodNode method = ASMUtil.findMethod(classNode, "func_77613_e", "getRarity", null);
@@ -147,7 +136,7 @@ public final class CoreTransformer implements IClassTransformer {
         String isJumpingFieldName = ASMUtil.isObfuscated ? "field_70703_bu" : "isJumping";
 
         for (AbstractInsnNode node : travelNode.instructions.toArray()) {
-            int flagLoc = ASMUtil.isObfuscated ? 21 : 9; // I have no idea why this is different
+            int flagLoc = ASMUtil.isObfuscated ? 21 : 9;
 
             if (node.getOpcode() == ISTORE && ((VarInsnNode) node).var == flagLoc) {
                 travelNode.instructions.insert(node, ASMUtil.createInsnList(
@@ -162,10 +151,8 @@ public final class CoreTransformer implements IClassTransformer {
 
         int occurrence = 0;
 
-        // easier to iterate array than to use the built-in iterator
         for (AbstractInsnNode node : travelNode.instructions.toArray()) {
             if (node.getOpcode() == GETFIELD && ((FieldInsnNode) node).name.equals(collidedHorizontallyFieldName)) {
-                // want the second occurrence
                 if (occurrence++ == 1) {
                     LabelNode l74 = new LabelNode(new Label());
 
@@ -176,7 +163,7 @@ public final class CoreTransformer implements IClassTransformer {
                     travelNode.instructions.insert(node, ASMUtil.createInsnList(
                             new JumpInsnNode(IFNE, l74),
                             new VarInsnNode(ALOAD, 0),
-                            new FieldInsnNode(GETFIELD, "net/minecraft/entity/EntityLivingBase", isJumpingFieldName, "Z")
+                            new FieldInsnNode(GETFIELD, "net/minecraft/entity/entityliving/EntityLivingBase", isJumpingFieldName, "Z")
                     ));
 
                     break;
@@ -189,33 +176,26 @@ public final class CoreTransformer implements IClassTransformer {
         String fmcFieldName = "_fmc_has_placed_beehive";
         String className = "biomesoplenty/common/world/generator/tree/GeneratorTreeBase";
 
-        // PATCH 1
-        // set to true during generate and then set to false after a tree is done generating
-        classNode.visitField(ACC_PRIVATE, fmcFieldName, "Z", null, false); // value is "false" by default
+        classNode.visitField(ACC_PRIVATE, fmcFieldName, "Z", null, false);
 
-        // PATCH 2
         InsnList toAddGetScatterY = ASMUtil.createInsnList(
-                new VarInsnNode(ALOAD, 0), // load instance
-                new InsnNode(ICONST_0), // FALSE
-                new FieldInsnNode(PUTFIELD, className, fmcFieldName, "Z") // set instance field to FALSE
+                new VarInsnNode(ALOAD, 0),
+                new InsnNode(ICONST_0),
+                new FieldInsnNode(PUTFIELD, className, fmcFieldName, "Z")
         );
-        // patch at the beginning of the method
         ASMUtil.patchBeforeInsn(ASMUtil.findMethod(classNode, "getScatterY", "getScatterY", null), toAddGetScatterY, 1, node -> {
             return node.getOpcode() == ALOAD;
         });
 
-        // PATCH 3
         LabelNode l7 = new LabelNode(new Label());
         InsnList toAddSetLog = ASMUtil.createInsnList(
                 new VarInsnNode(ALOAD, 0),
                 new FieldInsnNode(GETFIELD, className, fmcFieldName, "Z"),
                 new JumpInsnNode(IFNE, l7),
-                new VarInsnNode(ALOAD, 0), // load instance to set field
-                new VarInsnNode(ALOAD, 1), // load world
-                new VarInsnNode(ALOAD, 2), // load pos
-                // method call + pop vars 1 and 2 off of the stack
+                new VarInsnNode(ALOAD, 0),
+                new VarInsnNode(ALOAD, 1),
+                new VarInsnNode(ALOAD, 2),
                 new MethodInsnNode(INVOKESTATIC, "thedarkcolour/futuremc/compat/biomesoplenty/BiomesOPlentyCompat", "placeBeehive", "(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)Z", false),
-                // set field of remaining instance var 0
                 new FieldInsnNode(PUTFIELD, className, fmcFieldName, "Z"),
                 l7,
                 new FrameNode(F_APPEND, 1, new Object[]{"net/minecraft/block/state/IBlockState"}, 0, null)
@@ -269,7 +249,6 @@ public final class CoreTransformer implements IClassTransformer {
     }
 
     private static void patchEntityRenderer(ClassNode classNode) {
-        // fix incompatibility with vivecraft?
         if (Compat.checkVivecraft()) {
             return;
         }
@@ -318,6 +297,4 @@ public final class CoreTransformer implements IClassTransformer {
         );
         ASMUtil.patchBeforeReturnTrue(method, toAdd);
     }
-
-    // 三叉戟功能已移除，patchModelBiped 方法已删除
 }
