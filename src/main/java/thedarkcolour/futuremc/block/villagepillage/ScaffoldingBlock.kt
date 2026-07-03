@@ -24,11 +24,6 @@ class ScaffoldingBlock(properties: Properties) : FBlock(properties) {
         return BlockStateContainer(this, DISTANCE, BOTTOM)
     }
 
-    // todo getShape
-    override fun getBoundingBox(state: IBlockState, worldIn: IBlockAccess, pos: BlockPos): AxisAlignedBB {
-        return super.getBoundingBox(state, worldIn, pos)
-    }
-
     override fun addCollisionBoxToList(
         state: IBlockState,
         worldIn: World,
