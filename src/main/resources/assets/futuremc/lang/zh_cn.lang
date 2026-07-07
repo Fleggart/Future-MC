@@ -62,7 +62,7 @@ tile.futuremc.red_nether_brick_slab.name=红色地狱砖台阶
 tile.futuremc.end_stone_brick_slab.name=末地石砖台阶
 tile.futuremc.bamboo.name=竹子
 tile.futuremc.bee_nest.name=蜂巢
-tile.futuremc.beehive.name=巨型蜂巢
+tile.futuremc.beehive.name=蜂箱
 tile.futuremc.honey_block.name=蜂蜜块
 tile.futuremc.honeycomb_block.name=蜜脾块
 
@@ -168,28 +168,13 @@ container.smoker=烟熏炉
 container.grindstone=修复 & 分解
 container.stonecutter=切石机
 container.loom=织布机
-container.smithing=升级齿轮
+container.smithing=升级装备
 
 # Entity
-entity.futuremc:trident.name=三叉戟
 entity.futuremc:panda.name=熊猫
 entity.futuremc:bee.name=蜜蜂
-entity.futuremc:cod.name=鳕鱼
-entity.futuremc:pufferfish.name=河豚
-entity.futuremc:salmon.name=鲑鱼
-entity.futuremc:tropical_fish.name=热带鱼
 
-# Enchantment
-enchantment.loyalty=忠诚
-enchantment.futuremc.loyalty.desc=三叉戟被扔后返回,较高的级别可以减少返回时间
-enchantment.channeling=引雷
-enchantment.futuremc.channeling.desc=三叉戟向被击中的实体引导闪电,仅在雷暴天气以及目标不受不透明块的阻碍时才起作用
-enchantment.riptide=激流
-enchantment.futuremc.riptide.desc=三叉戟被抛出时玩家飞得更高更远,仅在水或雨中起作用
-enchantment.impaling=穿刺
-enchantment.futuremc.impaling.desc=对自然海洋中的生物造成额外的伤害
-enchantment.quick_charge=快速填装
-enchantment.futuremc.quick_charge.desc=减少十字弩的填装时间
+
 
 # Creative Tab
 itemGroup.futuremc=Future MC
