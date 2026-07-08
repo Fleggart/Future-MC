@@ -86,17 +86,6 @@ object FBlocks {
     val SPRUCE_TRAPDOOR = BlockWoodTrapdoor("spruce_trapdoor")
     val DARK_OAK_TRAPDOOR = BlockWoodTrapdoor("dark_oak_trapdoor")
 
-    val ACACIA_STANDING_SIGN = FSignBlock.Standing("acacia")
-    val JUNGLE_STANDING_SIGN = FSignBlock.Standing("jungle")
-    val BIRCH_STANDING_SIGN = FSignBlock.Standing("birch")
-    val SPRUCE_STANDING_SIGN = FSignBlock.Standing("spruce")
-    val DARK_OAK_STANDING_SIGN = FSignBlock.Standing("dark_oak")
-    val ACACIA_WALL_SIGN = FSignBlock.Wall("acacia")
-    val JUNGLE_WALL_SIGN = FSignBlock.Wall("jungle")
-    val BIRCH_WALL_SIGN = FSignBlock.Wall("birch")
-    val SPRUCE_WALL_SIGN = FSignBlock.Wall("spruce")
-    val DARK_OAK_WALL_SIGN = FSignBlock.Wall("dark_oak")
-
     val SOUL_FIRE_LANTERN = LanternBlock(Properties(Material.IRON, "soul_fire_lantern").hardnessAndResistance(3.5f).sound(FSounds.LANTERN).light(10).group(CreativeTabs.DECORATIONS))
     val SOUL_FIRE_TORCH = BlockSoulFireTorch()
     val SOUL_SOIL = FBlock(Properties(Material.GROUND, "soul_soil").group(CreativeTabs.BUILDING_BLOCKS).sound(FSounds.SOUL_SOIL))
@@ -252,14 +241,6 @@ object FBlocks {
             blocks.register(CHAIN)
         if (FConfig.netherUpdate.netherite)
             blocks.registerAll(NETHERITE_BLOCK, ANCIENT_DEBRIS)
-
-        val newSigns = FConfig.villageAndPillage.newSigns
-
-        if (newSigns.acacia) { blocks.registerAll(ACACIA_STANDING_SIGN, ACACIA_WALL_SIGN) }
-        if (newSigns.birch) { blocks.registerAll(BIRCH_STANDING_SIGN, BIRCH_WALL_SIGN) }
-        if (newSigns.darkOak) { blocks.registerAll(DARK_OAK_STANDING_SIGN, DARK_OAK_WALL_SIGN) }
-        if (newSigns.jungle) { blocks.registerAll(JUNGLE_STANDING_SIGN, JUNGLE_WALL_SIGN) }
-        if (newSigns.spruce) { blocks.registerAll(SPRUCE_STANDING_SIGN, SPRUCE_WALL_SIGN) }
 
         registerTE("futuremc:barrel", TileBarrel::class.java, FConfig.villageAndPillage.barrel)
         registerTE("futuremc:blast_furnace", TileFurnaceAdvanced.TileBlastFurnace::class.java, FConfig.villageAndPillage.blastFurnace)
