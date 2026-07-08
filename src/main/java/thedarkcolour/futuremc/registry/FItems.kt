@@ -103,9 +103,6 @@ object FItems {
     val SPRUCE_TRAPDOOR = ModeledItemBlock(FBlocks.SPRUCE_TRAPDOOR)
     val DARK_OAK_TRAPDOOR = ModeledItemBlock(FBlocks.DARK_OAK_TRAPDOOR)
 
-    val SOUL_FIRE_LANTERN = ModeledItemBlock(FBlocks.SOUL_FIRE_LANTERN)
-    val SOUL_FIRE_TORCH = ModeledItemBlock(FBlocks.SOUL_FIRE_TORCH)
-    val SOUL_SOIL = ModeledItemBlock(FBlocks.SOUL_SOIL)
     val CHAIN = ModeledItemBlock(FBlocks.CHAIN)
     val NETHERITE_BLOCK = FireproofItemBlock(FBlocks.NETHERITE_BLOCK)
     val ANCIENT_DEBRIS = FireproofItemBlock(FBlocks.ANCIENT_DEBRIS)
@@ -186,9 +183,6 @@ object FItems {
         if (FConfig.villageAndPillage.newTrapdoors.birch) items.register(BIRCH_TRAPDOOR)
         if (FConfig.villageAndPillage.newTrapdoors.spruce) items.register(SPRUCE_TRAPDOOR)
         if (FConfig.villageAndPillage.newTrapdoors.darkOak) items.register(DARK_OAK_TRAPDOOR)
-        if (FConfig.netherUpdate.soulFireLantern) items.register(SOUL_FIRE_LANTERN)
-        if (FConfig.netherUpdate.soulFireTorch) items.register(SOUL_FIRE_TORCH)
-        if (FConfig.netherUpdate.soulSoil) items.register(SOUL_SOIL)
 
         if (FConfig.netherUpdate.netherite) {
             items.registerAll(NETHERITE_INGOT, NETHERITE_SCRAP, NETHERITE_AXE, NETHERITE_HOE, NETHERITE_PICKAXE, NETHERITE_SHOVEL, NETHERITE_SWORD, NETHERITE_HELMET, NETHERITE_CHESTPLATE, NETHERITE_LEGGINGS, NETHERITE_BOOTS)
