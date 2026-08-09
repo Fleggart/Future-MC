@@ -29,16 +29,6 @@ object FConfig {
         @JvmField
         var blueIce = true
 
-        //@Name("Data Command")
-        //@Comment("Whether the /data command is enabled.")
-        //@RequiresMcRestart
-        //@JvmField var dataCommand = false
-
-        //@Name("Drowned")
-        //@Comment("Whether the Drowned is enabled.")
-        //@RequiresMcRestart
-        //@JvmField var drowned = false
-
         @Name("Fish")
         @Comment("Options for fish")
         @JvmField
@@ -418,11 +408,6 @@ object FConfig {
         @JvmField
         val sweetBerryBush = SweetBerryBush()
 
-        @Name("Wither Rose")
-        @Comment("Options for the Wither Rose")
-        @JvmField
-        val witherRose = WitherRose()
-
         class Bamboo {
             @Name("Enabled")
             @Comment("Whether this feature is enabled.")
@@ -657,18 +642,6 @@ object FConfig {
             var spawnWithBerries = false
         }
 
-        class WitherRose {
-            @Name("Enabled")
-            @Comment("Whether this flower is enabled.")
-            @RequiresMcRestart
-            @JvmField
-            var enabled = true
-
-            @Name("Does Damage")
-            @Comment("Whether the Wither Rose will deal damage when walked on.")
-            @JvmField
-            var damage = true
-        }
     }
 
     class BuzzyBees {
