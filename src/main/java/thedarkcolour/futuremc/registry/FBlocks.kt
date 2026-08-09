@@ -44,7 +44,6 @@ object FBlocks {
     val HONEYCOMB_BLOCK = FBlock(Properties(Material.CLAY, "honeycomb_block").color(MapColor.ADOBE).hardnessAndResistance(0.6F).sound(FSounds.CORAL).group(CreativeTabs.DECORATIONS))
     @JvmField val LILY_OF_THE_VALLEY = LilyOfTheValleyBlock()
     @JvmField val CORNFLOWER = CornflowerBlock()
-    @JvmField val WITHER_ROSE = WitherRoseBlock()
     val SWEET_BERRY_BUSH = SweetBerryBushBlock()
     val CAMPFIRE = CampfireBlock(Properties(Material.WOOD, "campfire").color(MapColor.OBSIDIAN).hardnessAndResistance(2.0f).sound(SoundType.WOOD).light(15).tickRandomly().group(CreativeTabs.DECORATIONS))
     @JvmField val BAMBOO = BlockBamboo(Properties(Material.PLANTS, "bamboo").sound(FSounds.BAMBOO).group(CreativeTabs.MISC).tickRandomly().hardnessAndResistance(1.0f))
