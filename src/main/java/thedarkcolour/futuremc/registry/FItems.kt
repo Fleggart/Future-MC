@@ -135,7 +135,7 @@ object FItems {
         if (FConfig.buzzyBees.honeycombBlock) items.register(HONEYCOMB_BLOCK)
         if (FConfig.villageAndPillage.lilyOfTheValley.enabled) items.register(LILY_OF_THE_VALLEY)
         if (FConfig.villageAndPillage.cornflower.enabled) items.register(CORNFLOWER)
-        if (FConfig.villageAndPillage.witherRose.enabled) items.register(WITHER_ROSE)
+        
         if (FConfig.villageAndPillage.campfire.enabled) items.register(CAMPFIRE)
         if (FConfig.villageAndPillage.scaffolding) items.register(SCAFFOLDING)
         if (FConfig.buzzyBees.bee.enabled) items.registerAll(BEE_NEST, BEEHIVE)
@@ -146,7 +146,6 @@ object FItems {
             if (FConfig.updateAquatic.strippedLogs.oak) items.register(STRIPPED_OAK_LOG)
             if (FConfig.updateAquatic.strippedLogs.spruce) items.register(STRIPPED_SPRUCE_LOG)
             if (FConfig.updateAquatic.strippedLogs.darkOak) items.register(STRIPPED_DARK_OAK_LOG)
-        }
         if (FConfig.villageAndPillage.newWalls.brick) items.register(BRICK_WALL)
         if (FConfig.villageAndPillage.newWalls.granite) items.register(GRANITE_WALL)
         if (FConfig.villageAndPillage.newWalls.andesite) items.register(ANDESITE_WALL)
