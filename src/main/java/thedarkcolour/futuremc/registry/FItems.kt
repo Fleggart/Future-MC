@@ -58,6 +58,7 @@ object FItems {
     val HONEYCOMB_BLOCK = ModeledItemBlock(FBlocks.HONEYCOMB_BLOCK)
     val LILY_OF_THE_VALLEY = ModeledItemBlock(FBlocks.LILY_OF_THE_VALLEY)
     val CORNFLOWER = ModeledItemBlock(FBlocks.CORNFLOWER)
+    // WITHER_ROSE 已删除
     val CAMPFIRE = ModeledItemBlock(FBlocks.CAMPFIRE)
     val SCAFFOLDING = ScaffoldingItem()
     val BEE_NEST = ModeledItemBlock(FBlocks.BEE_NEST)
@@ -108,7 +109,6 @@ object FItems {
     val RECORD_PIGSTEP = RecordItem("pigstep", FSounds.RECORD_PIGSTEP).setItemGroup(CreativeTabs.MISC)
     val RECORD_OTHERSIDE = RecordItem("otherside", FSounds.RECORD_OTHERSIDE).setItemGroup(CreativeTabs.MISC)
 
-
     fun registerItems(items: IForgeRegistry<Item>) {
         if (FConfig.villageAndPillage.dyes) items.register(DYES)
         if (FConfig.villageAndPillage.loom.enabled) items.register(BANNER_PATTERN)
@@ -135,7 +135,7 @@ object FItems {
         if (FConfig.buzzyBees.honeycombBlock) items.register(HONEYCOMB_BLOCK)
         if (FConfig.villageAndPillage.lilyOfTheValley.enabled) items.register(LILY_OF_THE_VALLEY)
         if (FConfig.villageAndPillage.cornflower.enabled) items.register(CORNFLOWER)
-        
+        // 凋灵玫瑰物品注册已删除
         if (FConfig.villageAndPillage.campfire.enabled) items.register(CAMPFIRE)
         if (FConfig.villageAndPillage.scaffolding) items.register(SCAFFOLDING)
         if (FConfig.buzzyBees.bee.enabled) items.registerAll(BEE_NEST, BEEHIVE)
@@ -146,6 +146,7 @@ object FItems {
             if (FConfig.updateAquatic.strippedLogs.oak) items.register(STRIPPED_OAK_LOG)
             if (FConfig.updateAquatic.strippedLogs.spruce) items.register(STRIPPED_SPRUCE_LOG)
             if (FConfig.updateAquatic.strippedLogs.darkOak) items.register(STRIPPED_DARK_OAK_LOG)
+        }
         if (FConfig.villageAndPillage.newWalls.brick) items.register(BRICK_WALL)
         if (FConfig.villageAndPillage.newWalls.granite) items.register(GRANITE_WALL)
         if (FConfig.villageAndPillage.newWalls.andesite) items.register(ANDESITE_WALL)
