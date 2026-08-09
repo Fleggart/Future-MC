@@ -127,8 +127,6 @@ object FBlocks {
             blocks.register(LILY_OF_THE_VALLEY)
         if (FConfig.villageAndPillage.cornflower.enabled)
             blocks.register(CORNFLOWER)
-        if (FConfig.villageAndPillage.witherRose.enabled)
-            blocks.register(WITHER_ROSE)
         if (FConfig.villageAndPillage.sweetBerryBush.enabled)
             blocks.register(SWEET_BERRY_BUSH)
         if (FConfig.villageAndPillage.campfire.enabled)
