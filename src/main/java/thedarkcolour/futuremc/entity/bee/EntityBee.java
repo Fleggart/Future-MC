@@ -55,7 +55,7 @@ public class EntityBee extends EntityAnimal implements EntityFlying {
     private static final DataParameter<Byte> BEE_FLAGS = EntityDataManager.createKey(EntityBee.class, DataSerializers.BYTE);
     private static final DataParameter<Integer> ANGER = EntityDataManager.createKey(EntityBee.class, DataSerializers.VARINT);
     public static final List<IBlockState> FLOWERS = Lists.newArrayList(
-            FBlocks.CORNFLOWER.getDefaultState(), FBlocks.LILY_OF_THE_VALLEY.getDefaultState(), FBlocks.WITHER_ROSE.getDefaultState(),
+            FBlocks.CORNFLOWER.getDefaultState(), FBlocks.LILY_OF_THE_VALLEY.getDefaultState(),
             Blocks.YELLOW_FLOWER.getDefaultState().withProperty(Blocks.YELLOW_FLOWER.getTypeProperty(), EnumFlowerType.DANDELION),
             Blocks.RED_FLOWER.getDefaultState().withProperty(Blocks.RED_FLOWER.getTypeProperty(), EnumFlowerType.POPPY),
             Blocks.RED_FLOWER.getDefaultState().withProperty(Blocks.RED_FLOWER.getTypeProperty(), EnumFlowerType.BLUE_ORCHID),
