@@ -27,7 +27,7 @@ import thedarkcolour.futuremc.compat.checkHarvestCraft
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.registry.FBlocks.CORNFLOWER
 import thedarkcolour.futuremc.registry.FBlocks.LILY_OF_THE_VALLEY
-import thedarkcolour.futuremc.registry.FBlocks.WITHER_ROSE
+
 import thedarkcolour.futuremc.registry.FItems.SWEET_BERRIES
 import thedarkcolour.futuremc.registry.FSounds
 import thedarkcolour.futuremc.tile.TileComposter
@@ -217,7 +217,6 @@ class ComposterBlock(properties: Properties) : InteractionBlock(properties) {
                 add(Blocks.YELLOW_FLOWER, ComposterRarity.RARE)
                 add(LILY_OF_THE_VALLEY, ComposterRarity.RARE)
                 add(CORNFLOWER, ComposterRarity.RARE)
-                add(WITHER_ROSE, ComposterRarity.RARE)
                 add(Blocks.DOUBLE_PLANT, ComposterRarity.RARE)
                 add(ItemStack(Blocks.DOUBLE_PLANT, 1, 1), ComposterRarity.RARE)
                 add(ItemStack(Blocks.DOUBLE_PLANT, 1, 4), ComposterRarity.RARE)
