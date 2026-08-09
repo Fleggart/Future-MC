@@ -5,8 +5,6 @@ import net.minecraft.block.BlockLog.EnumAxis
 import net.minecraft.block.properties.IProperty
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.EntityLivingBase
-import net.minecraft.entity.boss.EntityWither
-import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.monster.EntityElderGuardian
 import net.minecraft.entity.monster.EntityIronGolem
 import net.minecraft.entity.player.EntityPlayer
@@ -26,7 +24,6 @@ import net.minecraft.world.World
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.config.Config
 import net.minecraftforge.common.config.ConfigManager
-import net.minecraftforge.event.ForgeEventFactory
 import net.minecraftforge.event.entity.PlaySoundAtEntityEvent
 import net.minecraftforge.event.entity.living.LivingDeathEvent
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent
@@ -56,7 +53,6 @@ import thedarkcolour.futuremc.registry.FBlocks.STRIPPED_DARK_OAK_LOG
 import thedarkcolour.futuremc.registry.FBlocks.STRIPPED_JUNGLE_LOG
 import thedarkcolour.futuremc.registry.FBlocks.STRIPPED_OAK_LOG
 import thedarkcolour.futuremc.registry.FBlocks.STRIPPED_SPRUCE_LOG
-import thedarkcolour.futuremc.registry.FBlocks.WITHER_ROSE
 import thedarkcolour.futuremc.registry.FItems.HONEY_BOTTLE
 import thedarkcolour.futuremc.registry.FSounds
 import thedarkcolour.futuremc.registry.FSounds.HONEY_BOTTLE_DRINK
@@ -196,34 +192,6 @@ object Events {
         } else {
             // call API from nullable wrapper
             checkTConstruct()?.damageTool(stack, 1, playerIn)
-        }
-    }
-
-    // wither rose spawn
-    @SubscribeEvent
-    fun spawnWitherRose(event: LivingDeathEvent) {
-        val entityIn = event.entityLiving
-        val worldIn = entityIn.world
-
-        if (!entityIn.isDead) {
-            if (!worldIn.isRemote) {
-                if (FConfig.villageAndPillage.witherRose.enabled && event.source.trueSource is EntityWither) {
-                    if (ForgeEventFactory.getMobGriefingEvent(worldIn, entityIn)) {
-                        val pos = BlockPos(entityIn.posX, entityIn.posY, entityIn.posZ)
-                        val state = worldIn.getBlockState(pos)
-
-                        if (state.block.isAir(state, worldIn, pos) && WITHER_ROSE.canBlockStay(worldIn, pos, state)) {
-                            worldIn.setBlockState(pos, WITHER_ROSE.defaultState, 3)
-                            return
-                        }
-                    }
-
-                    val witherRose = EntityItem(worldIn, entityIn.posX, entityIn.posY, entityIn.posZ)
-                    witherRose.item = ItemStack(WITHER_ROSE)
-                    worldIn.spawnEntity(witherRose)
-                }
-                // Elder Guardian trident drop removed
-            }
         }
     }
 
