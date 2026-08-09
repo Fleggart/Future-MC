@@ -58,7 +58,6 @@ object FItems {
     val HONEYCOMB_BLOCK = ModeledItemBlock(FBlocks.HONEYCOMB_BLOCK)
     val LILY_OF_THE_VALLEY = ModeledItemBlock(FBlocks.LILY_OF_THE_VALLEY)
     val CORNFLOWER = ModeledItemBlock(FBlocks.CORNFLOWER)
-    val WITHER_ROSE = ModeledItemBlock(FBlocks.WITHER_ROSE)
     val CAMPFIRE = ModeledItemBlock(FBlocks.CAMPFIRE)
     val SCAFFOLDING = ScaffoldingItem()
     val BEE_NEST = ModeledItemBlock(FBlocks.BEE_NEST)
